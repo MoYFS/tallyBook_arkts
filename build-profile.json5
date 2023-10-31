@@ -1,0 +1,41 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\moyufusheng\\.ohos\\config\\auto_debug_tallyBook_arkts_com.example.tallybook_arkts_350086000128849958.cer",
+          "storePassword": "0000001B63F513445B4E718D5BB3063B5FD7FDF977B92DCC6A5F9DA902CAFE23A61BDC02769B5D31F6FC36",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B7F5079A1C7AEF328D79629FDA82C6681F8888028AD5B026A62DC93E94D8D287BF5C2F5CD504708",
+          "profile": "C:\\Users\\moyufusheng\\.ohos\\config\\auto_debug_tallyBook_arkts_com.example.tallybook_arkts_350086000128849958.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\moyufusheng\\.ohos\\config\\auto_debug_tallyBook_arkts_com.example.tallybook_arkts_350086000128849958.p12"
+        }
+      }
+    ],
+    "compileSdkVersion": 9,
+    "compatibleSdkVersion": 9,
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}
