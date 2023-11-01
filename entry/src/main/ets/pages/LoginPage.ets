@@ -100,7 +100,8 @@ struct LoginPage {
                     else{
                       if (this.passwordText ==this.password) {
                         router.pushUrl({ url: 'pages/MainPage' ,params: {
-                          pageClear:'Clear'
+                          pageClear:'Clear',
+                          account:this.accountText
                         }});
                       }
                       else{
