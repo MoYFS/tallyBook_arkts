@@ -1,4 +1,6 @@
 import router from '@ohos.router'
+import hilog from '@ohos.hilog';
+import FaultLogger from '@ohos.faultLogger';
 
 @Entry
 @Component
@@ -6,16 +8,17 @@ struct MainPage {
 
   @State grayScale:number=0;
   @State showSide:boolean=true;
+  @State showButton:Visibility=Visibility.None;
   @State account:string='Dear';
   //@State account:string=router.getParams()['account'];
   private controller: TabsController = new TabsController()
 
 
-// onPageShow(){
-//   if(router.getParams()['pageClear']==='Clear') {
-//     router.clear()
-//   }
-// }
+onPageShow(){
+  // if(router.getParams()['pageClear']==='Clear') {
+  //   router.clear()
+  // }
+}
 
   build() {
     SideBarContainer(SideBarContainerType.Overlay) {
@@ -33,6 +36,9 @@ struct MainPage {
             .offset({'x':'0.0px','y':'-16.5%'})
             .zIndex(2)
       }
+      .onTouch((event:TouchEvent)=>{
+        this.showButton=Visibility.None
+      })
       .width('100%')
       .height("100%")
       .backgroundColor(Color.White)
@@ -44,11 +50,42 @@ struct MainPage {
             .width("100%")
             .height("100%")
             .fontColor(Color.White)
-            .fontSize(28)
-            .offset({ "x": "20%", "y": "20%" })
+            .fontSize(24)
+            .offset({ "x": "15%", "y": "20%" })
             .textAlign(TextAlign.Start)
-            .zIndex(2)
+          Button('···',{type:ButtonType.Normal,stateEffect:false})
+            .rotate({angle:90})
+            .fontSize(24)
+            .backgroundColor(Color.Transparent)
+            .fontWeight(FontWeight.Bolder)
+            .offset({ "x": "40%", "y": "20%" })
+            .onClick((event: ClickEvent)=>{
+              hilog.info(0x0000,'test','test')
+              this.showButton=Visibility.Visible
+            })
+          Button({type:ButtonType.Normal,stateEffect:true}){
+            Text('用户信息')
+              .fontSize(24)
+              .fontColor(Color.Black)
+              .offset({'x':'-20%','y':'0.0px'})
+          }
+          .borderRadius(3)
+          .width('60%')
+          .height('50%')
+          .fontSize(24)
+          .backgroundColor(Color.White)
+          .fontWeight(FontWeight.Bolder)
+          .visibility(this.showButton)
+          .offset({ "x": "20%", "y": "20%" })
+          .onClick((event: ClickEvent)=>{
+            router.pushUrl({url:'pages/RegistrationPage',params:{
+              account:this.account
+            }})
+          })
         }
+        .onTouch((event:TouchEvent)=>{
+          this.showButton=Visibility.None
+        })
         .height('12%')
         .backgroundColor('#3CA0D0')
         .shadow({ radius: 4, color: "00001E", offsetX: 0, offsetY: 0 })
@@ -79,8 +116,11 @@ struct MainPage {
           .height('88%')
           .width('100%')
           .offset({ "x": "0.0px", "y": "0.0px" })
-        .animationDuration(400)
+          .animationDuration(300)//tabBar切换时间
       }
+      .onTouch((event:TouchEvent)=>{
+        this.showButton=Visibility.None
+      })
       .grayscale(this.grayScale)
       .width("100%")
       .height("100%")
@@ -88,7 +128,6 @@ struct MainPage {
     }
     .showSideBar(false)
     .showControlButton(true)
-
     .sideBarWidth('80%')
     .width('100%')
     .height('100%')
@@ -97,6 +136,7 @@ struct MainPage {
     .autoHide(true)
     .onChange((value)=>{
       if(value){
+        this.showButton=Visibility.None
         animateTo({
           duration:350,
           curve:Curve.FastOutLinearIn,
@@ -120,4 +160,21 @@ struct MainPage {
       }
     })
   }
+
+  pageTransition() {
+    PageTransitionEnter({
+      duration: globalThis.transitionTime,
+      curve: Curve.Linear,
+      type:RouteType.Pop
+    })
+      .slide(SlideEffect.Left)
+
+    PageTransitionExit({
+      duration:globalThis.transitionTime,
+      type:RouteType.Push,
+      curve: Curve.Linear,
+    })
+      .slide(SlideEffect.Left)
+  }
+
 }

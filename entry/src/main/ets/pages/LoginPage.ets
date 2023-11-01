@@ -18,7 +18,7 @@ struct LoginPage {
 
  onPageShow(){
    globalThis.getAccountPreferences().then((preferences)=>{
-      preferences.get('my_account','ferror').then((value)=>{
+      preferences.get('my_account','error').then((value)=>{
         this.accountText=value;
         this.account=value;
         preferences.get(this.accountText,'error').then((value)=>{
