@@ -79,6 +79,7 @@ struct MainPage {
           .height('88%')
           .width('100%')
           .offset({ "x": "0.0px", "y": "0.0px" })
+        .animationDuration(400)
       }
       .grayscale(this.grayScale)
       .width("100%")
@@ -87,10 +88,7 @@ struct MainPage {
     }
     .showSideBar(false)
     .showControlButton(true)
-    // .animation({
-    //   duration:10,
-    //   tempo:1
-    // })
+
     .sideBarWidth('80%')
     .width('100%')
     .height('100%')
