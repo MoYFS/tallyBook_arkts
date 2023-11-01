@@ -76,7 +76,8 @@ onPageShow(){
           .backgroundColor(Color.White)
           .fontWeight(FontWeight.Bolder)
           .visibility(this.showButton)
-          .offset({ "x": "20%", "y": "20%" })
+          .offset({ "x": "19%", "y": "20%" })
+          .shadow({ radius: 6, color: "00001E", offsetX: 0, offsetY: 0 })
           .onClick((event: ClickEvent)=>{
             router.pushUrl({url:'pages/RegistrationPage',params:{
               account:this.account
