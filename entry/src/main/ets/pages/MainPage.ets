@@ -1,5 +1,6 @@
 import router from '@ohos.router'
 import hilog from '@ohos.hilog';
+import display from '@ohos.display';
 import FaultLogger from '@ohos.faultLogger';
 
 @Entry
@@ -8,7 +9,8 @@ struct MainPage {
 
   @State grayScale:number=0;
   @State showSide:boolean=true;
-  @State showButton:Visibility=Visibility.None;
+  @State showButton:boolean=false;
+  @State scale1:number=1;
   @State account:string='Dear';
   //@State account:string=router.getParams()['account'];
   private controller: TabsController = new TabsController()
@@ -16,8 +18,9 @@ struct MainPage {
 
 onPageShow(){
   // if(router.getParams()['pageClear']==='Clear') {
-  //   router.clear()
+    router.clear()
   // }
+  this.showButton=false;
 }
 
   build() {
@@ -35,10 +38,76 @@ onPageShow(){
             .fontWeight(FontWeight.Bold)
             .offset({'x':'0.0px','y':'-16.5%'})
             .zIndex(2)
+        Button({type:ButtonType.Normal,stateEffect:true})
+          Row() {
+            Image($rawfile('gui/ic_sitting.png'))
+              .width('25%')
+              .height('120%')
+              .scale({x:0.4,y:0.4})
+            Text('设置')
+              .fontSize(24)
+          }
+          .width('100%')
+          .height('8%')
+          .offset({'x':'0.0px','y':'-16%'})
+          .backgroundColor(Color.Transparent)
+        Button({type:ButtonType.Normal,stateEffect:true})
+        Row() {
+          Image($rawfile('gui/ic_share.png'))
+            .width('25%')
+            .height('120%')
+            .scale({x:0.4,y:0.4})
+          Text('分享')
+            .fontSize(24)
+        }
+        .width('100%')
+        .height('8%')
+        .offset({'x':'0.0px','y':'-16%'})
+        .backgroundColor(Color.Transparent)
+        Button({type:ButtonType.Normal,stateEffect:true})
+        Row() {
+          Image($rawfile('gui/ic_assessment_grey600_24dp.png'))
+            .width('25%')
+            .height('120%')
+            .scale({x:0.4,y:0.4})
+          Text('报告')
+            .fontSize(24)
+        }
+        .width('100%')
+        .height('8%')
+        .offset({'x':'0.0px','y':'-16%'})
+        .backgroundColor(Color.Transparent)
+        Divider()//分割线
+          .vertical(false)
+          .strokeWidth(2)
+          .offset({'x':'0.0px','y':'-16%'})
+        Button({type:ButtonType.Normal,stateEffect:true})
+        Row() {
+          Image($rawfile('gui/ic_help_grey600_24dp.png'))
+            .width('25%')
+            .height('120%')
+            .scale({x:0.4,y:0.4})
+          Text('帮助')
+            .fontSize(24)
+        }
+        .width('100%')
+        .height('8%')
+        .offset({'x':'0.0px','y':'-10%'})
+        .backgroundColor(Color.Transparent)
+        Button({type:ButtonType.Normal,stateEffect:true})
+        Row() {
+          Image($rawfile('gui/ic_assessment_grey600_24dp.png'))
+            .width('25%')
+            .height('120%')
+            .scale({x:0.4,y:0.4})
+          Text('关于')
+            .fontSize(24)
+        }
+        .width('100%')
+        .height('8%')
+        .offset({'x':'0.0px','y':'-10%'})
+        .backgroundColor(Color.Transparent)
       }
-      .onTouch((event:TouchEvent)=>{
-        this.showButton=Visibility.None
-      })
       .width('100%')
       .height("100%")
       .backgroundColor(Color.White)
@@ -53,40 +122,43 @@ onPageShow(){
             .fontSize(24)
             .offset({ "x": "15%", "y": "20%" })
             .textAlign(TextAlign.Start)
-          Button('···',{type:ButtonType.Normal,stateEffect:false})
-            .rotate({angle:90})
+          Button('···', { type: ButtonType.Normal, stateEffect: false })
+            .rotate({ angle: 90 })
             .fontSize(24)
             .backgroundColor(Color.Transparent)
             .fontWeight(FontWeight.Bolder)
             .offset({ "x": "40%", "y": "20%" })
-            .onClick((event: ClickEvent)=>{
-              hilog.info(0x0000,'test','test')
-              this.showButton=Visibility.Visible
+            .onClick((event: ClickEvent) => {
+              hilog.info(0x0000, 'test', 'test')
+              animateTo({ duration: 200 }, () => {
+                this.showButton = true
+              })
             })
-          Button({type:ButtonType.Normal,stateEffect:true}){
-            Text('用户信息')
-              .fontSize(24)
-              .fontColor(Color.Black)
-              .offset({'x':'-20%','y':'0.0px'})
+          if(this.showButton){
+            Button({ type: ButtonType.Normal, stateEffect: true }) {
+              Text('用户信息')
+                .fontSize(24)
+                .fontColor(Color.Black)
+                .offset({ 'x': '-20%', 'y': '0.0px' })
+            }
+            .borderRadius(3)
+            .width('60%')
+            .height('50%')
+            .fontSize(24)
+            .backgroundColor(Color.White)
+            .fontWeight(FontWeight.Bolder)
+            .offset({ "x": "19%", "y": "20%" })
+            .shadow({ radius: 6, color: "00001E", offsetX: 0, offsetY: 0 })
+            .onClick((event: ClickEvent) => {
+              router.pushUrl({ url: 'pages/RegistrationPage', params: {
+                account: this.account
+              }
+              })
+            })
+            .transition({type:TransitionType.Insert,opacity:0,scale:{x:0,y:1,centerX:'100%'}})
+            .transition({type:TransitionType.Delete,opacity:0,scale:{x:0,y:1,centerX:'100%'}})
           }
-          .borderRadius(3)
-          .width('60%')
-          .height('50%')
-          .fontSize(24)
-          .backgroundColor(Color.White)
-          .fontWeight(FontWeight.Bolder)
-          .visibility(this.showButton)
-          .offset({ "x": "19%", "y": "20%" })
-          .shadow({ radius: 6, color: "00001E", offsetX: 0, offsetY: 0 })
-          .onClick((event: ClickEvent)=>{
-            router.pushUrl({url:'pages/RegistrationPage',params:{
-              account:this.account
-            }})
-          })
         }
-        .onTouch((event:TouchEvent)=>{
-          this.showButton=Visibility.None
-        })
         .height('12%')
         .backgroundColor('#3CA0D0')
         .shadow({ radius: 4, color: "00001E", offsetX: 0, offsetY: 0 })
@@ -108,7 +180,7 @@ onPageShow(){
 
           TabContent() {
             Column() {
-              Text('Tab2')
+              Text('Tab3')
             }.width('100%')
           }
           .tabBar({icon:$rawfile('gui/tab_icon3.png'),text:'支出'})
@@ -118,10 +190,12 @@ onPageShow(){
           .width('100%')
           .offset({ "x": "0.0px", "y": "0.0px" })
           .animationDuration(300)//tabBar切换时间
+          .onTouch((event:TouchEvent)=>{
+              animateTo({ duration: 200 }, () => {
+                this.showButton = false
+              })
+          })
       }
-      .onTouch((event:TouchEvent)=>{
-        this.showButton=Visibility.None
-      })
       .grayscale(this.grayScale)
       .width("100%")
       .height("100%")
@@ -137,7 +211,9 @@ onPageShow(){
     .autoHide(true)
     .onChange((value)=>{
       if(value){
-        this.showButton=Visibility.None
+        animateTo({ duration: 200 }, () => {
+          this.showButton = false
+        })
         animateTo({
           duration:350,
           curve:Curve.FastOutLinearIn,
