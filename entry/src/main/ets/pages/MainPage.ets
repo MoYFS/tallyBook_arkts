@@ -1,5 +1,6 @@
 import router from '@ohos.router'
 import hilog from '@ohos.hilog';
+import  {disbursement} from '../commom/dataclass/disbursement'
 import display from '@ohos.display';
 import FaultLogger from '@ohos.faultLogger';
 
@@ -31,81 +32,93 @@ onPageShow(){
           .zIndex(1)
         Image($rawfile('gui/default_user_logo.png'))
           .width('35%')
-          .offset({'x':'0.0px','y':'-18%'})
+          .offset({ 'x': '0.0px', 'y': '-18%' })
           .zIndex(2)
-          Text(this.account)
-            .fontSize(20)
-            .fontWeight(FontWeight.Bold)
-            .offset({'x':'0.0px','y':'-16.5%'})
-            .zIndex(2)
-        Button({type:ButtonType.Normal,stateEffect:true})
+        Text(this.account)
+          .fontSize(20)
+          .fontWeight(FontWeight.Bold)
+          .offset({ 'x': '0.0px', 'y': '-16.5%' })
+          .zIndex(2)
+        Button({ type: ButtonType.Normal, stateEffect: true }){
           Row() {
             Image($rawfile('gui/ic_sitting.png'))
               .width('25%')
               .height('120%')
-              .scale({x:0.4,y:0.4})
+              .scale({ x: 0.4, y: 0.4 })
             Text('设置')
               .fontSize(24)
           }
-          .width('100%')
-          .height('8%')
-          .offset({'x':'0.0px','y':'-16%'})
-          .backgroundColor(Color.Transparent)
-        Button({type:ButtonType.Normal,stateEffect:true})
-        Row() {
-          Image($rawfile('gui/ic_share.png'))
-            .width('25%')
-            .height('120%')
-            .scale({x:0.4,y:0.4})
-          Text('分享')
-            .fontSize(24)
         }
+        .align(Alignment.Start)
         .width('100%')
         .height('8%')
-        .offset({'x':'0.0px','y':'-16%'})
+        .offset({ 'x': '0.0px', 'y': '-16%' })
         .backgroundColor(Color.Transparent)
-        Button({type:ButtonType.Normal,stateEffect:true})
-        Row() {
-          Image($rawfile('gui/ic_assessment_grey600_24dp.png'))
-            .width('25%')
-            .height('120%')
-            .scale({x:0.4,y:0.4})
-          Text('报告')
-            .fontSize(24)
+        Button({type:ButtonType.Normal,stateEffect:true}) {
+          Row() {
+            Image($rawfile('gui/ic_share.png'))
+              .width('25%')
+              .height('120%')
+              .scale({ x: 0.4, y: 0.4 })
+            Text('分享')
+              .fontSize(24)
+          }
         }
+        .align(Alignment.Start)
         .width('100%')
         .height('8%')
-        .offset({'x':'0.0px','y':'-16%'})
+        .offset({ 'x': '0.0px', 'y': '-16%' })
+        .backgroundColor(Color.Transparent)
+
+        Button({type:ButtonType.Normal,stateEffect:true}) {
+          Row() {
+            Image($rawfile('gui/ic_assessment_grey600_24dp.png'))
+              .width('25%')
+              .height('120%')
+              .scale({ x: 0.4, y: 0.4 })
+            Text('报告')
+              .fontSize(24)
+          }
+        }
+        .align(Alignment.Start)
+        .width('100%')
+        .height('8%')
+        .offset({ 'x': '0.0px', 'y': '-16%' })
         .backgroundColor(Color.Transparent)
         Divider()//分割线
           .vertical(false)
           .strokeWidth(2)
           .offset({'x':'0.0px','y':'-16%'})
-        Button({type:ButtonType.Normal,stateEffect:true})
-        Row() {
-          Image($rawfile('gui/ic_help_grey600_24dp.png'))
-            .width('25%')
-            .height('120%')
-            .scale({x:0.4,y:0.4})
-          Text('帮助')
-            .fontSize(24)
+        Button({type:ButtonType.Normal,stateEffect:true}) {
+          Row() {
+            Image($rawfile('gui/ic_help_grey600_24dp.png'))
+              .width('25%')
+              .height('120%')
+              .scale({ x: 0.4, y: 0.4 })
+            Text('帮助')
+              .fontSize(24)
+          }
         }
+        .align(Alignment.Start)
         .width('100%')
         .height('8%')
-        .offset({'x':'0.0px','y':'-10%'})
+        .offset({ 'x': '0.0px', 'y': '-10%' })
         .backgroundColor(Color.Transparent)
-        Button({type:ButtonType.Normal,stateEffect:true})
-        Row() {
-          Image($rawfile('gui/ic_assessment_grey600_24dp.png'))
-            .width('25%')
-            .height('120%')
-            .scale({x:0.4,y:0.4})
-          Text('关于')
-            .fontSize(24)
+
+        Button({type:ButtonType.Normal,stateEffect:true}) {
+          Row() {
+            Image($rawfile('gui/ic_assessment_grey600_24dp.png'))
+              .width('25%')
+              .height('120%')
+              .scale({ x: 0.4, y: 0.4 })
+            Text('关于')
+              .fontSize(24)
+          }
         }
+        .align(Alignment.Start)
         .width('100%')
         .height('8%')
-        .offset({'x':'0.0px','y':'-10%'})
+        .offset({ 'x': '0.0px', 'y': '-10%' })
         .backgroundColor(Color.Transparent)
       }
       .width('100%')
