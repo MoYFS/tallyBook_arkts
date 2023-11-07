@@ -47,7 +47,6 @@ struct AboutPage {
         Button({ type: ButtonType.Normal, stateEffect: true }) {
           Text('关闭')
             .fontSize(28)
-
             .fontColor(Color.Black)
             .offset({ 'x': '0.0px', 'y': '0.0px' })
         }
