@@ -104,6 +104,9 @@ onPageShow(){
         .height('8%')
         .offset({ 'x': '0.0px', 'y': '-10%' })
         .backgroundColor(Color.Transparent)
+        .onClick((event: ClickEvent)=>{
+          router.pushUrl({url:'pages/HelpPage'})
+        })
 
         Button({type:ButtonType.Normal,stateEffect:true}) {
           Row() {
@@ -120,6 +123,9 @@ onPageShow(){
         .height('8%')
         .offset({ 'x': '0.0px', 'y': '-10%' })
         .backgroundColor(Color.Transparent)
+        .onClick((event: ClickEvent)=>{
+          router.pushUrl({url:'pages/AboutPage'})
+        })
       }
       .width('100%')
       .height("100%")
@@ -142,7 +148,6 @@ onPageShow(){
             .fontWeight(FontWeight.Bolder)
             .offset({ "x": "40%", "y": "20%" })
             .onClick((event: ClickEvent) => {
-              hilog.info(0x0000, 'test', 'test')
               animateTo({ duration: 200 }, () => {
                 this.showButton = true
               })
@@ -178,22 +183,30 @@ onPageShow(){
 
         Tabs({barPosition:BarPosition.End,index:0,controller:this.controller}){
           TabContent() {
-            Column() {
+            Column() {//概要页面开始
               Text('Tab1')
 
+
+                      //概要页面结束
             }.width('100%')
           }.tabBar({icon:$rawfile('gui/tab_icon1.png'),text:'概要'})
 
           TabContent() {
-            Column() {
+            Column() {//收入页面开始
               Text('Tab2')
+
+
+                      //收入页面结束
             }.width('100%')
           }
           .tabBar({icon:$rawfile('gui/tab_icon2.png'),text:'收入'})
 
           TabContent() {
-            Column() {
+            Column() {//支出页面开始
               Text('Tab3')
+
+
+                      //支出页面结束
             }.width('100%')
           }
           .tabBar({icon:$rawfile('gui/tab_icon3.png'),text:'支出'})
@@ -202,7 +215,7 @@ onPageShow(){
           .height('88%')
           .width('100%')
           .offset({ "x": "0.0px", "y": "0.0px" })
-          .animationDuration(300)//tabBar切换时间
+          .animationDuration(200)//tabBar切换时间
           .onTouch((event:TouchEvent)=>{
               animateTo({ duration: 200 }, () => {
                 this.showButton = false
@@ -253,14 +266,14 @@ onPageShow(){
 
   pageTransition() {
     PageTransitionEnter({
-      duration: globalThis.transitionTime,
+      duration: 200,
       curve: Curve.Linear,
       type:RouteType.Pop
     })
       .slide(SlideEffect.Left)
 
     PageTransitionExit({
-      duration:globalThis.transitionTime,
+      duration:200,
       type:RouteType.Push,
       curve: Curve.Linear,
     })

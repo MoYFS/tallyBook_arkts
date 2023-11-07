@@ -56,7 +56,7 @@ struct InitialPage {
   }
   pageTransition() {                            // 添加全局pageTransition方法
     PageTransitionEnter({                       // 设置当前页面入场动画的配置信息
-      duration: globalThis.transitionTime,                           // 动画执行时间
+      duration: 200,                           // 动画执行时间
       curve: Curve.Linear                       // 设置动画曲线
     })
       .slide(SlideEffect.Bottom)
@@ -67,7 +67,7 @@ struct InitialPage {
 
     PageTransitionExit({                        // 设置当前页面退场动画的配置信息
       type:RouteType.Push,
-      duration: globalThis.transitionTime,                           // 设置动画的执行时间
+      duration: 200,                           // 设置动画的执行时间
       curve: Curve.Ease                         // 设置动画曲线
     })
       .slide(SlideEffect.Left)

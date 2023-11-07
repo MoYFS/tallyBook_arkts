@@ -116,14 +116,14 @@ onPageShow(){
   //转场动画
   pageTransition() {
     PageTransitionEnter({
-      duration:globalThis.transitionTime,
+      duration:200,
       type:RouteType.Push,
       curve: Curve.Linear,
     })
       .slide(SlideEffect.Right)
 
     PageTransitionExit({
-      duration: globalThis.transitionTime,
+      duration: 200,
       curve: Curve.Linear,
       type:RouteType.Pop
     })

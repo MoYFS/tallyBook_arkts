@@ -178,7 +178,7 @@ struct LoginPage {
   //转场动画
   pageTransition() {
     PageTransitionEnter({
-      duration: globalThis.transitionTime,
+      duration: 200,
       curve: Curve.Linear,
       type:RouteType.Push
     })
@@ -188,14 +188,14 @@ struct LoginPage {
       })
 
     PageTransitionEnter({
-      duration: globalThis.transitionTime,
+      duration:200,
       curve: Curve.Linear,
       type:RouteType.Pop
     })
       .slide(SlideEffect.Left)
 
     PageTransitionExit({
-      duration: globalThis.transitionTime,
+      duration: 200,
       curve: Curve.Ease,
       type:RouteType.None
     })
@@ -205,7 +205,7 @@ struct LoginPage {
         this.opacity1 = 1-progress
       })
     PageTransitionExit({
-      duration:globalThis.transitionTime,
+      duration:200,
       type:RouteType.Push,
       curve: Curve.Linear,
     })
