@@ -4,8 +4,8 @@
     "pages/LoginPage",
     "pages/RegistrationPage",
     "pages/MainPage",
-    "pages/DIY",
     "pages/HelpPage",
-    "pages/AboutPage"
+    "pages/AboutPage",
+    "pages/SittingPage"
   ]
 }

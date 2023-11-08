@@ -12,8 +12,8 @@ struct MainPage {
   @State showSide:boolean=true;
   @State showButton:boolean=false;
   @State scale1:number=1;
-  @State account:string='Dear';
-  //@State account:string=router.getParams()['account'];
+  //@State account:string='Dear';
+  @State account:string=router.getParams()['account'];
   private controller: TabsController = new TabsController()
 
 
@@ -54,6 +54,10 @@ onPageShow(){
         .height('8%')
         .offset({ 'x': '0.0px', 'y': '-16%' })
         .backgroundColor(Color.Transparent)
+        .onClick((event:ClickEvent)=>{
+          router.pushUrl({url:'pages/SittingPage'})
+        })
+
         Button({type:ButtonType.Normal,stateEffect:true}) {
           Row() {
             Image($rawfile('gui/ic_share.png'))
