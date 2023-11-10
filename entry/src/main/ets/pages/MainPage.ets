@@ -12,8 +12,8 @@ struct MainPage {
   @State showSide:boolean=true;
   @State showButton:boolean=false;
   @State scale1:number=1;
-  //@State account:string='Dear';
-  @State account:string=router.getParams()['account'];
+  @State account:string='Dear';
+  //@State account:string=router.getParams()['account'];
   private controller: TabsController = new TabsController()
 
 
