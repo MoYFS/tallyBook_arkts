@@ -5,13 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "C:\\Users\\moyufusheng\\.ohos\\config\\auto_debug_tallyBook_arkts_com.example.tallybook_arkts_350086000128849958.cer",
-          "storePassword": "0000001B63F513445B4E718D5BB3063B5FD7FDF977B92DCC6A5F9DA902CAFE23A61BDC02769B5D31F6FC36",
+          "certpath": "C:\\Users\\zhang\\.ohos\\config\\auto_debug_tallyBook_arkts_com.example.tallybook_arkts_350086000128849958.cer",
+          "storePassword": "0000001B0E51314F627A6D70F12AC0632A18E05C3ABC25115E0E9B64703F7216049844F4135FD76584D10F",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B7F5079A1C7AEF328D79629FDA82C6681F8888028AD5B026A62DC93E94D8D287BF5C2F5CD504708",
-          "profile": "C:\\Users\\moyufusheng\\.ohos\\config\\auto_debug_tallyBook_arkts_com.example.tallybook_arkts_350086000128849958.p7b",
+          "keyPassword": "0000001BB077243C9DB4BC64558452B56E6AF84A04CDB196CD7F4BA383D898A126DDAD95CF3C93479C77EA",
+          "profile": "C:\\Users\\zhang\\.ohos\\config\\auto_debug_tallyBook_arkts_com.example.tallybook_arkts_350086000128849958.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:\\Users\\moyufusheng\\.ohos\\config\\auto_debug_tallyBook_arkts_com.example.tallybook_arkts_350086000128849958.p12"
+          "storeFile": "C:\\Users\\zhang\\.ohos\\config\\auto_debug_tallyBook_arkts_com.example.tallybook_arkts_350086000128849958.p12"
         }
       }
     ],

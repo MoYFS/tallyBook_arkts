@@ -188,7 +188,7 @@ onPageShow(){
         Tabs({barPosition:BarPosition.End,index:0,controller:this.controller}){
           TabContent() {
             Column() {//概要页面开始
-              Text('Tab1')
+              Text('周新奇')
 
 
                       //概要页面结束
@@ -197,7 +197,7 @@ onPageShow(){
 
           TabContent() {
             Column() {//收入页面开始
-              Text('Tab2')
+              Text('黄达')
 
 
                       //收入页面结束
@@ -207,7 +207,7 @@ onPageShow(){
 
           TabContent() {
             Column() {//支出页面开始
-              Text('Tab3')
+              Text('陈尹')
 
 
                       //支出页面结束
