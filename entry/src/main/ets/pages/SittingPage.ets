@@ -175,7 +175,6 @@ struct SittingPage {
     }
   }
 
-
   pageTransition() {
     PageTransitionEnter({
       duration: 200,
