@@ -1,8 +1,9 @@
 import router from '@ohos.router'
 import hilog from '@ohos.hilog';
-import  {disbursement} from '../commom/dataclass/disbursement'
+import  disbursement from '../commom/dataclass/disbursement'
+import  inout from '../commom/dataclass/inout'
+import dataOperation from '../commom/dataclass/dataOperation'
 import display from '@ohos.display';
-import FaultLogger from '@ohos.faultLogger';
 
 @Entry
 @Component
@@ -15,14 +16,18 @@ struct MainPage {
   @State account:string='Dear';
   //@State account:string=router.getParams()['account'];
   private controller: TabsController = new TabsController()
+  @State balance:number=0;
 
 
-onPageShow(){
+  onPageShow(){
   // if(router.getParams()['pageClear']==='Clear') {
     router.clear()
   // }
-  this.showButton=false;
-}
+    this.showButton=false;
+  }
+  aboutToAppear(){
+
+  }
 
   build() {
     SideBarContainer(SideBarContainerType.Overlay) {
@@ -187,12 +192,22 @@ onPageShow(){
 
         Tabs({barPosition:BarPosition.End,index:0,controller:this.controller}){
           TabContent() {
-            Column() {//概要页面开始
-              Text('周新奇')
-
+            Column({space:10}) {//概要页面开始
+              Text('账户余额')
+                .fontSize(24)
+                .offset({'x':'0px','y':'2%'})
+              Text(this.balance.toString())
+                .fontSize(24)
+                .offset({'x':'0px','y':'2%'})
+              Gauge({value:0})
+                .width(350).height(350)
+                .value(23)
+                .strokeWidth(50)
+                .offset({'x':'0px','y':'2%'})
 
                       //概要页面结束
             }.width('100%')
+            .height('100%')
           }.tabBar({icon:$rawfile('gui/tab_icon1.png'),text:'概要'})
 
           TabContent() {
