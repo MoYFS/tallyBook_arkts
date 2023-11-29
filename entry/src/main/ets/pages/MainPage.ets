@@ -4,6 +4,7 @@ import  disbursement from '../commom/dataclass/disbursement'
 import  inout from '../commom/dataclass/inout'
 import dataOperation from '../commom/dataclass/dataOperation'
 import display from '@ohos.display';
+import { PieChart , PicChartElement} from '../view/PieChart'
 
 @Entry
 @Component
@@ -199,12 +200,10 @@ struct MainPage {
               Text(this.balance.toString())
                 .fontSize(24)
                 .offset({'x':'0px','y':'2%'})
-              Gauge({value:0})
-                .width(350).height(350)
-                .value(23)
-                .strokeWidth(50)
-                .offset({'x':'0px','y':'2%'})
-
+              PieChart()
+                .height('100%')
+                .offset({'x':'0px','y':'10%'})
+                .scale({x:1.2,y:1.2})
                       //概要页面结束
             }.width('100%')
             .height('100%')
