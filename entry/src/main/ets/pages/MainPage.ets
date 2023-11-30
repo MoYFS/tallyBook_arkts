@@ -29,10 +29,6 @@ struct MainPage {
   }
 
   onPageShow(){
-    this.dataOperation.IncomeList=[new inout(0,1,0,'工资',1000)]
-    this.dataOperation.DisbList=[new inout(1,2,3,'电影',100),new inout(1,3,4,'房租',300)]
-    this.dataOperation.strikingBalance()
-    this.balance=this.dataOperation.remainingSum
   // if(router.getParams()['pageClear']==='Clear') {
     router.clear()
   // }
@@ -211,7 +207,8 @@ struct MainPage {
                 .offset({'x':'0px','y':'2%'})
               PieChart({picChartElements:this.dataOperation.DisbList.map((value)=>{
                 return new PicChartElement(value.category,value.money,this.pieColor[value.cateid].toString())
-                })
+                }),
+                sum:400
               })
                 .height('100%')
                 .offset({'x':'0px','y':'10%'})

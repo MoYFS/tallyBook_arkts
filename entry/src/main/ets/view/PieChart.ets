@@ -11,6 +11,7 @@ export struct PieChart {
     ]
   // 圆半径
   @State circle_radius:number = 80*1.5
+  @State sum:number=0;
   // 单位
   @State unit: string = "%"
   // 获取上下文
@@ -116,6 +117,9 @@ export struct PieChart {
             this.context.fillText(item.element.toString()+item.percent+this.unit,this.circle_radius*0.62,0)
             this.context.restore()
           })
+          this.context.moveTo(0,0)
+          this.context.font = '60px'
+          this.context.fillText('￥'+this.sum,-this.context.measureText('￥'+this.sum).width/2,this.context.measureText('￥'+this.sum).height/4)
         })
         .onClick((event:ClickEvent)=>{
 
