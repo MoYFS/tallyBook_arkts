@@ -1,6 +1,6 @@
 export default  class inout{
-  typeid:number
-  type:string
+  typeid:number//支出收入ID
+  type:string//支出或收入
   id:number//id
   category:string//种类
   cateid:number//种类id
@@ -8,7 +8,7 @@ export default  class inout{
   remarks:string//备注
   time:string
 
-  constructor(typeid:number,id:number,cate:string,cateid:number,money:number,remarks?:string,time?:string) {
+  constructor(typeid:number=0|1,id:number,cateid:number,cate:string,money:number,remarks?:string,time?:string) {
     if(typeid===0){
       this.type='支出'
     }

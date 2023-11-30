@@ -1,8 +1,10 @@
+import defaultAppManager from '@ohos.bundle.defaultAppManager';
 import inout from './inout';
 //import disbursement  from '../dataclass/disbursement'
 export default class dataOperation{
    public  IncomeList:Array<inout>;
    public  DisbList:Array<inout>;
+   public  showList:Array<[number,string,number]>;
    public  remainingSum:number;
    strikingBalance():void{
      let incme:number=0;
@@ -17,3 +19,4 @@ export default class dataOperation{
   }
 
 }
+//export default new dataOperation();

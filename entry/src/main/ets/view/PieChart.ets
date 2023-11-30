@@ -3,11 +3,11 @@
 export struct PieChart {
   // 饼图数据
   @State picChartElements: PicChartElement[]=[
-    new PicChartElement('蛋白质', 14.9, '#ff9421'),
-    new PicChartElement('脂肪', 39.8, '#ffd100'),
-    new PicChartElement('碳水', 19.1, '#4cd041'),
-    new PicChartElement('甜点', 9.1, '#4cd0ee'),
-    new PicChartElement('海鲜', 11.1, '#999999')
+    // new PicChartElement('蛋白质', 14.9, '#ff9421'),
+    // new PicChartElement('脂肪', 39.8, '#ffd100'),
+    // new PicChartElement('碳水', 19.1, '#4cd041'),
+    // new PicChartElement('甜点', 9.1, '#4cd0ee'),
+    // new PicChartElement('海鲜', 11.1, '#999999')
     ]
   // 圆半径
   @State circle_radius:number = 80*1.5
@@ -56,6 +56,7 @@ export struct PieChart {
         .onReady(() => {
           this.context.translate(160, 160)
           this.picChartElements.forEach((item) => {
+
             // 创建一个新的控制路径
             this.context.beginPath()
             // 路径从当前点移动到指定点
@@ -69,12 +70,55 @@ export struct PieChart {
             this.context.closePath()
 
             this.context.save()
+            this.context.beginPath()
+            // 路径从当前点移动到指定点
+            this.context.moveTo(0, 0)
+            // 绘制弧线路径(弧线圆心的x坐标值,弧线圆心的y坐标值,弧线的圆半径,弧线的起始弧度,弧线的终止弧度)
+            this.context.arc(0, 0, this.circle_radius*0.6, item.beginAngle, item.endAngle)
+            // 指定绘制的填充色
+            this.context.fillStyle = Color.White.toString()
+            // 对封闭路径进行填充
+            this.context.fill()
+            this.context.closePath()
+            this.context.restore()
+
+            this.context.save()
+            this.context.beginPath()
+            // 路径从当前点移动到指定点
+            this.context.moveTo(0, 0)
+            // 绘制弧线路径(弧线圆心的x坐标值,弧线圆心的y坐标值,弧线的圆半径,弧线的起始弧度,弧线的终止弧度)
+            this.context.arc(0, 0, this.circle_radius*0.6, item.beginAngle, item.endAngle)
+            // 指定绘制的填充色
+            this.context.fillStyle = item.color
+            this.context.globalAlpha=0.4
+            // 对封闭路径进行填充
+            this.context.fill()
+            this.context.closePath()
+            this.context.restore()
+
+            this.context.save()
+            this.context.beginPath()
+            // 路径从当前点移动到指定点
+            this.context.moveTo(0, 0)
+            // 绘制弧线路径(弧线圆心的x坐标值,弧线圆心的y坐标值,弧线的圆半径,弧线的起始弧度,弧线的终止弧度)
+            this.context.arc(0, 0, this.circle_radius*0.5, item.beginAngle, item.endAngle)
+            // 指定绘制的填充色
+            this.context.fillStyle = Color.White.toString()
+            // 对封闭路径进行填充
+            this.context.fill()
+            this.context.closePath()
+            this.context.restore()
+
+            this.context.save()
             this.context.fillStyle = Color.Black.toString()
             this.context.font = '40px'
             this.context.rotate((item.endAngle+item.beginAngle)/2)
-            this.context.fillText(item.element.toString()+item.percent+this.unit,item.circle_radius*0.2,0)
+            this.context.fillText(item.element.toString()+item.percent+this.unit,this.circle_radius*0.62,0)
             this.context.restore()
           })
+        })
+        .onClick((event:ClickEvent)=>{
+
         })
         //.margin({left:'6%'})
     }
