@@ -29,6 +29,8 @@ creaftPreferences(context){
           preferences.flush();
           preferences.put('Password_prompt',password)
           preferences.flush();
+          preferences.put('moneyID',0);
+          preferences.flush();
         }
       })
     })

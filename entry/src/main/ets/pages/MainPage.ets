@@ -22,8 +22,8 @@ struct MainPage {
   @State dataOperation:dataOperation=new dataOperation()
 
   aboutToAppear(){
-    this.dataOperation.IncomeList=[new inout(0,1,0,'工资',1000)]
-    this.dataOperation.DisbList=[new inout(1,2,3,'电影',100),new inout(1,3,4,'房租',300)]
+    this.dataOperation.IncomeList=[new inout(0,1,0,'工资',10000)]
+    this.dataOperation.DisbList=[new inout(1,2,3,'电影',100),new inout(1,3,4,'房租',300),new inout(1,4,2,'图书',1000)]
     this.dataOperation.strikingBalance()
     this.balance=this.dataOperation.remainingSum
   }
