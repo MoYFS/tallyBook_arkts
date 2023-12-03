@@ -8,7 +8,7 @@ export default  class inout{
   remarks:string//备注
   time:string
 
-  constructor(typeid:number=0|1,id:number,cateid:number,cate:string,money:number,remarks?:string,time?:string) {
+  constructor(id:number,typeid:number=0|1,cateid:number,cate:string,money:number,remarks?:string,time?:string) {
     if(typeid===0){
       this.type='支出'
     }

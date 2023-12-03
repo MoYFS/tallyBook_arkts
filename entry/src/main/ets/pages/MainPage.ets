@@ -1,8 +1,8 @@
 import router from '@ohos.router'
 import hilog from '@ohos.hilog';
 import  inout from '../commom/dataclass/inout'
-import display from '@ohos.display';
-import { PieChart , PicChartElement} from '../view/PieChart'
+import { PieChart} from '../view/PieChart'
+import {PicChartElement} from  '../commom/dataclass/PicChartElement'
 import dataOperation from '../commom/dataclass/dataOperation';
 import CommonConstants from '../commom/constant/CommonConstand'
 
@@ -17,15 +17,15 @@ struct MainPage {
   @State account:string='Dear';
   //@State account:string=router.getParams()['account'];
   private controller: TabsController = new TabsController()
-  private pieColor:Color[]=[Color.Blue,Color.Brown,Color.Gray,Color.Green,Color.Orange,Color.Pink,Color.Red,Color.Yellow]
-  @State balance:number=0;
-  @State dataOperation:dataOperation=new dataOperation()
+  @State @Watch('change') dataOperation:dataOperation=new dataOperation()
+  @StorageLink('PieElement') PieElement:PicChartElement[]=[]
+  @StorageLink('PieSum') PieSum:number=0;
 
   aboutToAppear(){
-    this.dataOperation.IncomeList=[new inout(0,1,0,'工资',10000)]
-    this.dataOperation.DisbList=[new inout(1,2,3,'电影',100),new inout(1,3,4,'房租',300),new inout(1,4,2,'图书',1000)]
+    this.dataOperation.IncomeList.push(new inout(0,0,1,'工资',10000))
+    this.dataOperation.DisbList.push(new inout(3,1,2,'电影',100),new inout(4,1,3,'房租',300),new inout(2,1,4,'图书',1000),new inout(5,1,4,'图书',100))
     this.dataOperation.strikingBalance()
-    this.balance=this.dataOperation.remainingSum
+    this.dataOperation.Statexp()
   }
 
   onPageShow(){
@@ -33,6 +33,11 @@ struct MainPage {
     router.clear()
   // }
     this.showButton=false;
+  }
+
+  change(){
+  this.PieElement=this.dataOperation.PieshowList;
+    this.PieSum=this.dataOperation.grossexp;
   }
 
   build() {
@@ -202,17 +207,13 @@ struct MainPage {
               Text('账户余额')
                 .fontSize(24)
                 .offset({'x':'0px','y':'2%'})
-              Text(this.balance.toString())
+              Text(this.dataOperation.remainingSum.toString())
                 .fontSize(24)
                 .offset({'x':'0px','y':'2%'})
-              PieChart({picChartElements:this.dataOperation.DisbList.map((value)=>{
-                return new PicChartElement(value.category,value.money,this.pieColor[value.cateid].toString())
-                }),
-                sum:400
-              })
-                .height('100%')
-                .offset({'x':'0px','y':'10%'})
-                .scale({x:1.2,y:1.2})
+                PieChart()
+                  .height('100%')
+                  .offset({ 'x': '0px', 'y': '10%' })
+                  .scale({ x: 1.2, y: 1.2 })
                       //概要页面结束
             }.width('100%')
             .height('100%')
