@@ -1,14 +1,21 @@
 import inout from './inout';
 import {PicChartElement} from '../dataclass/PicChartElement'
+import  {BasicDataSource} from '../dataclass/LazyForEachData'
+import hilog from '@ohos.hilog';
+
 export default class dataOperation{
   public  IncomeList:Array<inout>;
   public  DisbList:Array<inout>;
   public  PieshowList:Array<PicChartElement>//Array<[number,string,number]>;//种类id,种类名称，金额
   public  remainingSum:number;
-  public grossexp:number;
+  public  grossexp:number;
   private pieColor:Color[]=[Color.Blue,Color.Brown,Color.Gray,Color.Green,Color.Orange,Color.Pink,Color.Red,Color.Yellow]
+  public InBasicDataSource:BasicDataSource
+  public OutBasicDataSource:BasicDataSource
 
   constructor() {
+    this.InBasicDataSource=new BasicDataSource()
+    this.OutBasicDataSource=new BasicDataSource()
     this.IncomeList=[];
     this.DisbList=[];
     this.PieshowList=[];
@@ -42,7 +49,7 @@ export default class dataOperation{
   //删除一项收入
   deleteIncome(ID:number){
     this.IncomeList.forEach((value,index)=>{
-      if(value.id==ID){
+      if(value.id===ID){
         this.IncomeList.splice(index,1)
         this.strikingBalance()
       }

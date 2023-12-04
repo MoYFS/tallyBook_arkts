@@ -4,6 +4,7 @@ import  inout from '../commom/dataclass/inout'
 import { PieChart} from '../view/PieChart'
 import {PicChartElement} from  '../commom/dataclass/PicChartElement'
 import dataOperation from '../commom/dataclass/dataOperation';
+import PreferenceUtil from '../commom/database/PreferencesUtil'
 import CommonConstants from '../commom/constant/CommonConstand'
 
 @Entry
@@ -24,6 +25,10 @@ struct MainPage {
   aboutToAppear(){
     this.dataOperation.IncomeList.push(new inout(0,0,1,'工资',10000))
     this.dataOperation.DisbList.push(new inout(3,1,2,'电影',100),new inout(4,1,3,'房租',300),new inout(2,1,4,'图书',1000),new inout(5,1,4,'图书',100))
+    // globalThis.getAccountPreferences().then((preferences)=>{
+    //   preferences.put('moneyID',6)
+    //   preferences.flush()
+    // })
     this.dataOperation.strikingBalance()
     this.dataOperation.Statexp()
   }
@@ -36,8 +41,28 @@ struct MainPage {
   }
 
   change(){
-  this.PieElement=this.dataOperation.PieshowList;
+    this.PieElement=this.dataOperation.PieshowList;
     this.PieSum=this.dataOperation.grossexp;
+  }
+
+  @Builder itemEnd(item:inout) {
+    Row () {
+      Button("删除",{type:ButtonType.Normal})
+        .borderRadius(2)
+        .backgroundColor(Color.Red)
+        .onClick((event:ClickEvent)=>{
+          if(item.typeid==1){
+            this.dataOperation.deleteDisb(item.id)
+            //插入数据库删除操作
+          }
+          else {
+            this.dataOperation.deleteIncome(item.id)
+            //插入数据库删除操作
+          }
+        })
+    }
+    .margin({left:"16vp"})
+    .justifyContent(FlexAlign.SpaceEvenly)
   }
 
   build() {
@@ -210,32 +235,114 @@ struct MainPage {
               Text(this.dataOperation.remainingSum.toString())
                 .fontSize(24)
                 .offset({'x':'0px','y':'2%'})
-                PieChart()
-                  .height('100%')
-                  .offset({ 'x': '0px', 'y': '10%' })
-                  .scale({ x: 1.2, y: 1.2 })
+              PieChart()
+                .height('100%')
+                .offset({ 'x': '0px', 'y': '10%' })
+                .scale({ x: 1.2, y: 1.2 })
                       //概要页面结束
-            }.width('100%')
+            }
+            .width('100%')
             .height('100%')
           }.tabBar({icon:$rawfile('gui/tab_icon1.png'),text:'概要'})
 
           TabContent() {
             Column() {//收入页面开始
-              Text('黄达')
+              Stack() {
+                Text('  收入汇总：')
+                  .fontSize(24)
+                  .offset({ 'x': '0px', 'y': '2%' })
+                Text((this.dataOperation.remainingSum + this.dataOperation.grossexp).toString())
+                  .fontSize(22)
+                  .fontColor(Color.Gray)
+                  .offset({ 'x': '0px', 'y': '50%' })
+                Button({stateEffect:true})
+                  .shadow({ radius: 8, color: "00001E", offsetX: 0, offsetY: 0 })
+                  .backgroundColor(Color.Orange)
+                  .overlay('+',{align:Alignment.Center})
+                  .height('100%')
+                  .aspectRatio(1)
+                  .offset({ "x": '35%', 'y': '10%' })
+                  .onClick((event:ClickEvent)=>{
 
-
+                  })
+              }
+              .height('9%')
+              Divider()
+                .offset({'x':'0px','y':'2%'})
+              List({ space: 5, initialIndex: 0 }){
+                ForEach(this.dataOperation.IncomeList,(item:inout,index:number)=>{
+                  ListItem(){
+                    Row(){
+                      Text(item.category)
+                    }
+                    .shadow({ radius: 4, color: "00001E", offsetX: 0, offsetY: 0 })
+                    .width('96%')
+                    .height('10%')
+                    .offset({'x':'2%','y':'0%'})
+                    .backgroundColor(Color.White)
+                    .borderRadius(5)
+                  }
+                  .swipeAction({end:this.itemEnd(item)})
+                })
+              }
+              .width('100%')
+              .height('89%')
+              .offset({'x':'0px','y':'2%'})
                       //收入页面结束
-            }.width('100%')
+            }
+            .width('100%')
+            .height('100%')
           }
           .tabBar({icon:$rawfile('gui/tab_icon2.png'),text:'收入'})
 
           TabContent() {
             Column() {//支出页面开始
-              Text('陈尹')
+              Stack() {
+                Text('  支出汇总:')
+                  .fontSize(24)
+                  .offset({ 'x': '0px', 'y': '2%' })
+                Text(this.dataOperation.grossexp.toString())
+                  .fontSize(22)
+                  .fontColor(Color.Gray)
+                  .offset({ 'x': '0px', 'y': '50%' })
+                Button({stateEffect:true})
+                  .shadow({ radius: 8, color: "00001E", offsetX: 0, offsetY: 0 })
+                  .backgroundColor(Color.Orange)
+                  .overlay('+',{align:Alignment.Center})
+                  .height('100%')
+                  .aspectRatio(1)
+                  .offset({ "x": '35%', 'y': '10%' })
+                  .onClick((event:ClickEvent)=>{
 
-
-                      //支出页面结束
-            }.width('100%')
+                  })
+              }
+              .height('9%')
+              Divider()
+                .offset({'x':'0px','y':'2%'})
+              List({ space: 5, initialIndex: 0 }){
+                ForEach(this.dataOperation.DisbList,(item:inout,index:number)=>{
+                  ListItem(){
+                    Row(){
+                      Text(item.category)
+                    }
+                    .shadow({ radius: 4, color: "00001E", offsetX: 0, offsetY: 0 })
+                    .width('96%')
+                    .height('10%')
+                    .offset({'x':'2%','y':'0%'})
+                    .align(Alignment.Center)
+                    .backgroundColor(Color.White)
+                    .borderRadius(5)
+                  }
+                  .swipeAction({end:this.itemEnd(item)})
+                })
+              }
+              .width('100%')
+              .height('89%')
+              .offset({'x':'0px','y':'2%'})
+              //支出页面结束
+            }
+            .width('100%')
+            .height('100%')
           }
           .tabBar({icon:$rawfile('gui/tab_icon3.png'),text:'支出'})
 

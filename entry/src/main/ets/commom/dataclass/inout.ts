@@ -9,7 +9,7 @@ export default  class inout{
   time:string
 
   constructor(id:number,typeid:number=0|1,cateid:number,cate:string,money:number,remarks?:string,time?:string) {
-    if(typeid===0){
+    if(typeid===1){
       this.type='支出'
     }
     else{
