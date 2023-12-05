@@ -51,7 +51,6 @@ export default class EntryAbility extends UIAbility {
       }
       else {
         hilog.info(0x0000, 'testTag', 'Succeeded in loading the content. Data: %{public}s', JSON.stringify(data) ?? '');
-        //var timeoutID=setTimeout(()=>router.replaceUrl({url:'pages/second'}),10000);//用于自动跳转。现有移入InitialPage.ets中
       }
     });
   }

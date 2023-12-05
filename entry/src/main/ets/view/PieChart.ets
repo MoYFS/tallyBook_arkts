@@ -4,10 +4,10 @@ import {PicChartElement} from '../commom/dataclass/PicChartElement'
 @Component
 export struct PieChart {
   // 饼图数据
-  @StorageLink('PieElement') @Watch('refreshDraw') picChartElements: PicChartElement[]=[]
+  @StorageLink('PieElement')  picChartElements: PicChartElement[]=[]
   // 圆半径
   @State circle_radius:number = 80*1.5
-  @StorageLink('PieSum') sum:number=0;
+  @StorageLink('PieSum') @Watch('refreshDraw') sum:number=0;
   // 单位
   @State unit: string = "%"
   // 获取上下文

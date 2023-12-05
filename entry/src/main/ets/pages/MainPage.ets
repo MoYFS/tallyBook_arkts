@@ -6,6 +6,7 @@ import {PicChartElement} from  '../commom/dataclass/PicChartElement'
 import dataOperation from '../commom/dataclass/dataOperation';
 import PreferenceUtil from '../commom/database/PreferencesUtil'
 import CommonConstants from '../commom/constant/CommonConstand'
+import common from '@ohos.app.ability.common';
 
 @Entry
 @Component
@@ -51,7 +52,7 @@ struct MainPage {
         .borderRadius(2)
         .backgroundColor(Color.Red)
         .onClick((event:ClickEvent)=>{
-          if(item.typeid==1){
+          if(item.typeid===1){
             this.dataOperation.deleteDisb(item.id)
             //插入数据库删除操作
           }
@@ -63,6 +64,24 @@ struct MainPage {
     }
     .margin({left:"16vp"})
     .justifyContent(FlexAlign.SpaceEvenly)
+  }
+
+  startAbilityTest() {
+
+    let context = getContext(this) as common.UIAbilityContext;
+
+    let want  = {
+      "deviceId": "",
+      "bundleName": "",
+      "abilityName": "",
+      "uri": "",
+      "type": "text/plain",
+      "action": "ohos.want.action.sendData",
+      "parameters":{},
+      "entities":[]
+
+    };
+    context.startAbility(want);
   }
 
   build() {
@@ -109,6 +128,9 @@ struct MainPage {
               .fontSize(24)
           }
         }
+        .onClick((event:ClickEvent)=>{
+          this.startAbilityTest()
+        })
         .align(Alignment.Start)
         .width('100%')
         .height('8%')
