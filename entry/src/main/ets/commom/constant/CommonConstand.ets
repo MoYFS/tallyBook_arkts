@@ -1,4 +1,5 @@
-export default class CommonConstants {
+export enum cateIdDefine{'工资'=0,'奖金','图书','电影','房租','运动','医疗','兼职收入'}
+export class CommonConstats {
   static readonly  imageList : [string ,string,number][]=[
     ['fund_icon.png','工资',0],
     ['insurance_icon.png','奖金',1],

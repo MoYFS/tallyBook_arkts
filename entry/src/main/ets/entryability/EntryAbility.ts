@@ -4,8 +4,7 @@ import window from '@ohos.window';
 import Want from '@ohos.app.ability.Want';
 import AbilityConstant from '@ohos.app.ability.AbilityConstant';
 import PreferenceUtil from '../commom/database/PreferencesUtil'
-import fileuri from "@ohos.file.fileuri";
-import fs from '@ohos.file.fs';
+
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam) {

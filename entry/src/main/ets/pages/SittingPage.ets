@@ -1,4 +1,4 @@
-import CommonConstand from '../commom/constant/CommonConstand'
+import {CommonConstats,cateIdDefine} from '../commom/constant/CommonConstand'
 import GraphicList from '../view/GraphicList'
 @Entry
 @Component
@@ -22,9 +22,9 @@ struct SittingPage {
       .height('12%')
 
       Column() {
-        GraphicList({text:'收入类别',imageList:CommonConstand.incomeList.map((value)=>{return CommonConstand.imageList[value]})})
+        GraphicList({text:'收入类别',imageList:CommonConstats.incomeList.map((value)=>{return CommonConstats.imageList[value]})})
           .height('50%')
-        GraphicList({text:'支出类别',imageList:CommonConstand.disbursementList.map((value)=>{return CommonConstand.imageList[value]})})
+        GraphicList({text:'支出类别',imageList:CommonConstats.disbursementList.map((value)=>{return CommonConstats.imageList[value]})})
           .height('50%')
       }
       .offset({ 'x': '0.0px', 'y': '1%' })

@@ -5,8 +5,11 @@ import { PieChart} from '../view/PieChart'
 import {PicChartElement} from  '../commom/dataclass/PicChartElement'
 import dataOperation from '../commom/dataclass/dataOperation';
 import PreferenceUtil from '../commom/database/PreferencesUtil'
-import CommonConstants from '../commom/constant/CommonConstand'
+import { CommonConstats,cateIdDefine}  from '../commom/constant/CommonConstand'
 import common from '@ohos.app.ability.common';
+import fileuri from "@ohos.file.fileuri";
+import fs from '@ohos.file.fs';
+import measure from '@ohos.measure'
 
 @Entry
 @Component
@@ -24,20 +27,14 @@ struct MainPage {
   @StorageLink('PieSum') PieSum:number=0;
 
   aboutToAppear(){
-    this.dataOperation.IncomeList.push(new inout(0,0,1,'工资',10000))
-    this.dataOperation.DisbList.push(new inout(3,1,2,'电影',100),new inout(4,1,3,'房租',300),new inout(2,1,4,'图书',1000),new inout(5,1,4,'图书',100))
-    // globalThis.getAccountPreferences().then((preferences)=>{
-    //   preferences.put('moneyID',6)
-    //   preferences.flush()
-    // })
+    this.dataOperation.IncomeList.push(new inout(0,0,cateIdDefine.工资,'工资',100000))
+    this.dataOperation.DisbList.push(new inout(3,1,cateIdDefine.电影,'电影',100),new inout(4,1,cateIdDefine.房租,'房租',300),new inout(2,1,cateIdDefine.图书,'图书',1000),new inout(5,1,cateIdDefine.图书,'图书',100))
     this.dataOperation.strikingBalance()
     this.dataOperation.Statexp()
   }
 
   onPageShow(){
-  // if(router.getParams()['pageClear']==='Clear') {
     router.clear()
-  // }
     this.showButton=false;
   }
 
@@ -67,21 +64,18 @@ struct MainPage {
   }
 
   startAbilityTest() {
-
     let context = getContext(this) as common.UIAbilityContext;
-
+    let str=fs.createStreamSync(context.filesDir+'/inout.txt','w');
+    str.writeSync('收入：'+this.dataOperation.grossexp+this.dataOperation.remainingSum+'\n')
+    str.writeSync('支出：'+this.dataOperation.grossexp)
+    str.closeSync()
     let want  = {
-      "deviceId": "",
-      "bundleName": "",
-      "abilityName": "",
-      "uri": "",
-      "type": "text/plain",
-      "action": "ohos.want.action.sendData",
-      "parameters":{},
-      "entities":[]
-
-    };
-    context.startAbility(want);
+      uri:'',//fileuri.getUriFromPath(context.filesDir+'/inout.txt'),
+      type: "text/plain",
+      action: 'ohos.want.action.sendData',
+    }
+    context.startAbility(want)
+    //hilog.info(0x0000,'testTag',fs.readTextSync(context.filesDir+'/account.txt'))
   }
 
   build() {
@@ -129,6 +123,7 @@ struct MainPage {
           }
         }
         .onClick((event:ClickEvent)=>{
+          //hilog.info(0x0000,'testTag',"hello")
           this.startAbilityTest()
         })
         .align(Alignment.Start)
@@ -295,7 +290,30 @@ struct MainPage {
                 ForEach(this.dataOperation.IncomeList,(item:inout,index:number)=>{
                   ListItem(){
                     Row(){
-                      Text(item.category)
+                      Stack() {
+                        Column() {
+                          Text(item.category)
+                          Image($rawfile('gui/' + CommonConstats.imageList[item.cateid][0]))
+                            .height('60%')
+                            .aspectRatio(1)
+                        }
+                        .height('100%')
+                        .offset({'x':'-15%'})
+                        Text(item.money.toString())
+                          .fontSize(30)
+                          .fontColor(Color.Red)
+                          .offset({'x':'15%'})
+                          //.margin({left:'15%'})
+                          .padding({bottom:'12%'})
+                        Column() {
+                          Text(item.remarks)
+                          Text(item.time)
+                            .offset({ 'y': '25%' })
+                        }
+                        .offset({'x':'50%'})
+                        .height('100%')
+                        .width('50%')
+                      }
                     }
                     .shadow({ radius: 4, color: "00001E", offsetX: 0, offsetY: 0 })
                     .width('96%')
@@ -345,7 +363,30 @@ struct MainPage {
                 ForEach(this.dataOperation.DisbList,(item:inout,index:number)=>{
                   ListItem(){
                     Row(){
-                      Text(item.category)
+                      Stack() {
+                        Column() {
+                          Text(item.category)
+                          Image($rawfile('gui/' + CommonConstats.imageList[item.cateid][0]))
+                            .height('60%')
+                            .aspectRatio(1)
+                        }
+                        .height('100%')
+                        .offset({'x':'-15%'})
+                        //.margin({ le })
+                        Text(item.money.toString())
+                          .fontSize(30)
+                          .fontColor(Color.Red)
+                          .offset({'x':'15%'})
+                          .padding({bottom:'12%'})
+                        Column() {
+                          Text(item.remarks)
+                          Text(item.time)
+                            .offset({ 'y': '25%' })
+                        }
+                        .offset({'x':'50%'})
+                        .height('100%')
+                        .width('50%')
+                      }
                     }
                     .shadow({ radius: 4, color: "00001E", offsetX: 0, offsetY: 0 })
                     .width('96%')
