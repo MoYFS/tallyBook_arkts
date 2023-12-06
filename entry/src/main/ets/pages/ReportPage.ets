@@ -10,13 +10,19 @@ struct ReportPage {
   @State selectRadio:number=0//0为收入，1为支出
   @State dataOperation:dataOperation=new dataOperation()
   @State WhetherPress:boolean=false
+  @State startdate:string='2023-01-01'
+  @State endDate:string=''
 
   aboutToAppear(){
+    let temp=new Date
+    this.endDate=temp.getFullYear().toString()+'-'+temp.getMonth().toString()+'-'+temp.getDate().toString()
     this.dataOperation.IncomeList.push(new inout(0,0,cateIdDefine.gongzi,'工资',100000))
     this.dataOperation.DisbList.push(new inout(3,1,cateIdDefine.dianying,'电影',100),new inout(4,1,cateIdDefine.fangzu,'房租',300),new inout(2,1,cateIdDefine.tushu,'图书',1000),new inout(5,1,cateIdDefine.tushu,'图书',100))
   }
 
   onPageShow(){
+    let temp=new Date
+    this.endDate=temp.getFullYear().toString()+'-'+temp.getMonth().toString()+'-'+temp.getDate().toString()
     //this.dataOperation=router.getParams()['dataOperation']
   }
 
@@ -44,11 +50,32 @@ struct ReportPage {
         Row(){
           Column() {
             Text('起始日：')
+              .alignSelf(ItemAlign.Start)
+              .offset({'x':'3%','y':'-10%'})
+            TextInput({ text: this.startdate })
+              .width('30%')
+              .borderRadius(0)
+              .fontSize(14)
+              .alignSelf(ItemAlign.Start)
+              .style(TextInputStyle.Inline)
+              .textAlign(TextAlign.Start)
+              .maxLength(10)
           }
+          .offset({'y':'20%'})
           Column() {
             Text('截止日：')
+              .alignSelf(ItemAlign.Start)
+              .offset({'x':'3%','y':'-10%'})
+            TextInput({text:this.endDate})
+              .width('30%')
+              .fontSize(14)
+              .borderRadius(0)
+              .style(TextInputStyle.Inline)
+              .textAlign(TextAlign.Start)
+              .alignSelf(ItemAlign.Start)
+              .maxLength(10)
           }
-          .offset({'x':'10%'})
+          .offset({'y':'20%'})
           Column(){
             Row() {
               Radio({ value: '收入', group: 'report' })
@@ -73,13 +100,13 @@ struct ReportPage {
               Text('支出')
             }
           }
-          .offset({'x':'20%','y':'18%'})
+          .offset({'x':'0%','y':'18%'})
           Button({type:ButtonType.Normal,stateEffect:true}){
             Image($rawfile('gui/ic_search_grey600_24dp.png'))
               .height('100%')
               .aspectRatio(1)
           }
-          .offset({'x':'23%','y':'16%'})
+          .offset({'x':'1%','y':'16%'})
           .backgroundColor('#9F9F9F')
           .height('50%')
           .width('20%')
