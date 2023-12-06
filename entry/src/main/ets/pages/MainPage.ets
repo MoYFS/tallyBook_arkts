@@ -1,15 +1,11 @@
-import router from '@ohos.router'
-import hilog from '@ohos.hilog';
-import  inout from '../commom/dataclass/inout'
-import { PieChart} from '../view/PieChart'
-import {PicChartElement} from  '../commom/dataclass/PicChartElement'
+import router from '@ohos.router';
+import  inout from '../commom/dataclass/inout';
+import { PieChart} from '../view/PieChart';
+import {PicChartElement} from  '../commom/dataclass/PicChartElement';
 import dataOperation from '../commom/dataclass/dataOperation';
-import PreferenceUtil from '../commom/database/PreferencesUtil'
-import { CommonConstats,cateIdDefine}  from '../commom/constant/CommonConstand'
+import { CommonConstats,cateIdDefine}  from '../commom/constant/CommonConstand';
 import common from '@ohos.app.ability.common';
-import fileuri from "@ohos.file.fileuri";
 import fs from '@ohos.file.fs';
-import measure from '@ohos.measure'
 
 @Entry
 @Component
@@ -123,7 +119,6 @@ struct MainPage {
           }
         }
         .onClick((event:ClickEvent)=>{
-          //hilog.info(0x0000,'testTag',"hello")
           this.startAbilityTest()
         })
         .align(Alignment.Start)
@@ -142,6 +137,12 @@ struct MainPage {
               .fontSize(24)
           }
         }
+        .onClick((event:ClickEvent)=>{
+          router.pushUrl({url:'pages/ReportPage',params:{
+            dataOperation:this.dataOperation
+            }
+          },router.RouterMode.Single)
+        })
         .align(Alignment.Start)
         .width('100%')
         .height('8%')
@@ -230,9 +231,10 @@ struct MainPage {
             .offset({ "x": "19%", "y": "20%" })
             .shadow({ radius: 6, color: "00001E", offsetX: 0, offsetY: 0 })
             .onClick((event: ClickEvent) => {
-              router.pushUrl({ url: 'pages/RegistrationPage', params: {
-                account: this.account
-              }
+              router.pushUrl({ url: 'pages/RegistrationPage',
+                params: {
+                  account: this.account
+                }
               })
             })
             .transition({type:TransitionType.Insert,opacity:0,scale:{x:0,y:1,centerX:'100%'}})
@@ -303,7 +305,6 @@ struct MainPage {
                           .fontSize(30)
                           .fontColor(Color.Red)
                           .offset({'x':'15%'})
-                          //.margin({left:'15%'})
                           .padding({bottom:'12%'})
                         Column() {
                           Text(item.remarks)

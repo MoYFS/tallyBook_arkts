@@ -6,6 +6,7 @@
     "pages/MainPage",
     "pages/HelpPage",
     "pages/AboutPage",
-    "pages/SittingPage"
+    "pages/SittingPage",
+    "pages/ReportPage"
   ]
 }
