@@ -60,7 +60,6 @@ struct ReportPage {
               .style(TextInputStyle.Inline)
               .textAlign(TextAlign.Start)
               .maxLength(10)
-              .defaultFocus(false)
           }
           .offset({'y':'20%'})
           Column() {
@@ -75,7 +74,6 @@ struct ReportPage {
               .textAlign(TextAlign.Start)
               .alignSelf(ItemAlign.Start)
               .maxLength(10)
-              .defaultFocus(false)
           }
           .offset({'y':'20%'})
           Column(){
@@ -108,7 +106,6 @@ struct ReportPage {
               .height('100%')
               .aspectRatio(1)
           }
-          .groupDefaultFocus(true)
           .offset({'x':'1%','y':'16%'})
           .backgroundColor('#9F9F9F')
           .height('50%')
