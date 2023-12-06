@@ -27,8 +27,8 @@ struct MainPage {
   @StorageLink('PieSum') PieSum:number=0;
 
   aboutToAppear(){
-    this.dataOperation.IncomeList.push(new inout(0,0,cateIdDefine.工资,'工资',100000))
-    this.dataOperation.DisbList.push(new inout(3,1,cateIdDefine.电影,'电影',100),new inout(4,1,cateIdDefine.房租,'房租',300),new inout(2,1,cateIdDefine.图书,'图书',1000),new inout(5,1,cateIdDefine.图书,'图书',100))
+    this.dataOperation.IncomeList.push(new inout(0,0,cateIdDefine.gongzi,'工资',100000))
+    this.dataOperation.DisbList.push(new inout(3,1,cateIdDefine.dianying,'电影',100),new inout(4,1,cateIdDefine.fangzu,'房租',300),new inout(2,1,cateIdDefine.tushu,'图书',1000),new inout(5,1,cateIdDefine.tushu,'图书',100))
     this.dataOperation.strikingBalance()
     this.dataOperation.Statexp()
   }
