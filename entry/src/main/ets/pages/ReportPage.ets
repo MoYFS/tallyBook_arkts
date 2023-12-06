@@ -15,14 +15,14 @@ struct ReportPage {
 
   aboutToAppear(){
     let temp=new Date
-    this.endDate=temp.getFullYear().toString()+'-'+temp.getMonth().toString()+'-'+temp.getDate().toString()
+    this.endDate=temp.getFullYear().toString()+'-'+(temp.getMonth()+1).toString()+'-'+temp.getDate().toString()
     this.dataOperation.IncomeList.push(new inout(0,0,cateIdDefine.gongzi,'工资',100000))
     this.dataOperation.DisbList.push(new inout(3,1,cateIdDefine.dianying,'电影',100),new inout(4,1,cateIdDefine.fangzu,'房租',300),new inout(2,1,cateIdDefine.tushu,'图书',1000),new inout(5,1,cateIdDefine.tushu,'图书',100))
   }
 
   onPageShow(){
     let temp=new Date
-    this.endDate=temp.getFullYear().toString()+'-'+temp.getMonth().toString()+'-'+temp.getDate().toString()
+    this.endDate=temp.getFullYear().toString()+'-'+(temp.getMonth()+1).toString()+'-'+temp.getDate().toString()
     //this.dataOperation=router.getParams()['dataOperation']
   }
 
@@ -60,6 +60,7 @@ struct ReportPage {
               .style(TextInputStyle.Inline)
               .textAlign(TextAlign.Start)
               .maxLength(10)
+              .defaultFocus(false)
           }
           .offset({'y':'20%'})
           Column() {
@@ -74,6 +75,7 @@ struct ReportPage {
               .textAlign(TextAlign.Start)
               .alignSelf(ItemAlign.Start)
               .maxLength(10)
+              .defaultFocus(false)
           }
           .offset({'y':'20%'})
           Column(){
@@ -106,6 +108,7 @@ struct ReportPage {
               .height('100%')
               .aspectRatio(1)
           }
+          .groupDefaultFocus(true)
           .offset({'x':'1%','y':'16%'})
           .backgroundColor('#9F9F9F')
           .height('50%')

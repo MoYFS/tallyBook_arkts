@@ -22,6 +22,6 @@ export default  class inout{
     this.money=money
     this.remarks=remarks?remarks:' '
     let temp=new Date
-    this.time=time?time:temp.getFullYear().toString()+'-'+temp.getMonth().toString()+'-'+temp.getDate().toString()+' '+temp.getHours().toString()+':'+temp.getMinutes()+':'+temp.getSeconds().toString()
+    this.time=time?time:temp.getFullYear().toString()+'-'+(temp.getMonth()+1).toString()+'-'+temp.getDate().toString()+' '+temp.getHours().toString()+':'+temp.getMinutes()+':'+temp.getSeconds().toString()
   }
 }
