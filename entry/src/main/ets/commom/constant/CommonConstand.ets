@@ -8,8 +8,10 @@ export class CommonConstats {
     ['housing_loan_icon.png','房租',4],
     ['sport_icon.png','运动',5],
     ['medical_icon.png','医疗',6],
-    ['baby_icon.png','兼职收入',7],];
+    ['baby_icon.png','兼职收入',7],
+    ['traffic_icon.png','交通',8],
+    ['breakfast_icon.png','食物',9]];
  // static readonly  imageList : Array<[string ,string]>
   static readonly incomeList:Array<number>=[0,1,7];
-  static readonly disbursementList:Array<number>=[0,1,2,3,4,5];
+  static readonly disbursementList:Array<number>=[2,3,4,5,8,9];
 }

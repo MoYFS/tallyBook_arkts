@@ -22,6 +22,28 @@ struct MainPage {
   @StorageLink('PieElement') PieElement:PicChartElement[]=[]
   @StorageLink('PieSum') PieSum:number=0;
 
+  @State remarksValue:string=''
+  @State moneyValue:number=100
+  @State typeID:number=0
+  @State  cateid:number=0
+  dialogController: CustomDialogController = new CustomDialogController({
+    builder: CustomDialogExample({
+      remarksValue:$remarksValue,
+      moneyValue:$moneyValue,
+      typeid:this.typeID,
+      cateid: $cateid,
+      cancel: this.onCancel,
+      confirm: this.onAccept
+
+    }),
+    cancel: this.existApp,
+    autoCancel: true,
+    alignment: DialogAlignment.Default,
+    offset: { dx: 0, dy: -20 },
+    gridCount: 4,
+    customStyle: false
+  })
+
   aboutToAppear(){
     this.dataOperation.IncomeList.push(new inout(0,0,cateIdDefine.gongzi,'工资',100000))
     this.dataOperation.DisbList.push(new inout(3,1,cateIdDefine.dianying,'电影',100),new inout(4,1,cateIdDefine.fangzu,'房租',300),new inout(2,1,cateIdDefine.tushu,'图书',1000),new inout(5,1,cateIdDefine.tushu,'图书',100))
@@ -29,9 +51,25 @@ struct MainPage {
     this.dataOperation.Statexp()
   }
 
+  aboutToDisappear() {
+    delete this.dialogController,
+    this.dialogController = undefined
+  }
+
   onPageShow(){
     router.clear()
     this.showButton=false;
+  }
+
+  onCancel() {
+    console.info('Callback when the first button is clicked')
+  }
+
+  onAccept() {
+    console.info('Callback when the second button is clicked')
+  }
+  existApp() {
+    console.info('Click the callback in the blank area')
   }
 
   change(){
@@ -282,7 +320,11 @@ struct MainPage {
                   .aspectRatio(1)
                   .offset({ "x": '35%', 'y': '10%' })
                   .onClick((event:ClickEvent)=>{
-
+                    if (this.dialogController != undefined) {
+                      this.cateid=0
+                      this.typeID=0
+                      this.dialogController.open()
+                    }
                   })
               }
               .height('9%')
@@ -354,7 +396,11 @@ struct MainPage {
                   .aspectRatio(1)
                   .offset({ "x": '35%', 'y': '10%' })
                   .onClick((event:ClickEvent)=>{
-
+                    if (this.dialogController != undefined) {
+                      this.cateid=2
+                      this.typeID=1
+                      this.dialogController.open()
+                    }
                   })
               }
               .height('9%')
@@ -478,5 +524,84 @@ struct MainPage {
     })
       .slide(SlideEffect.Left)
   }
+}
 
+@CustomDialog
+struct CustomDialogExample {
+  @Link remarksValue: string
+  @Link moneyValue:number
+  @Link typeid:number
+  @Link  cateid:number
+  controller: CustomDialogController
+  cancel: () => void
+  confirm: () => void
+
+  build() {
+    Column() {
+      Text('类别:'+CommonConstats.imageList[this.cateid][1]).fontSize(20).margin({ top: 10, bottom: 10}).fontColor(Color.Gray)
+      List(){
+        if(this.typeid==0){
+          ForEach(CommonConstats.incomeList,(item,index)=>{
+            ListItem(){
+              Button({type:ButtonType.Normal,stateEffect:true}){
+                Image($rawfile('gui/' + CommonConstats.imageList[item][0]))
+                  .objectFit(ImageFit.None)
+                  .overlay(CommonConstats.imageList[item][1], { align: Alignment.Bottom })
+                  .backgroundImageSize(ImageSize.Auto)
+                  .alignSelf(ItemAlign.Start)
+                  .align(Alignment.Start)
+              }
+              .onClick((event:ClickEvent)=>{
+                this.cateid=item
+              })
+              .backgroundColor(Color.Transparent)
+              .height(75)
+              .width(75)
+            }
+          })
+        }
+        else{
+          ForEach(CommonConstats.disbursementList,(item,index)=>{
+            ListItem(){
+              Button({type:ButtonType.Normal,stateEffect:true}){
+                Image($rawfile('gui/' + CommonConstats.imageList[item][0]))
+                  .objectFit(ImageFit.None)
+                  .overlay(CommonConstats.imageList[item][1], { align: Alignment.Bottom })
+                  .backgroundImageSize(ImageSize.Auto)
+                  .alignSelf(ItemAlign.Start)
+                  .align(Alignment.Start)
+              }
+              .onClick((event:ClickEvent)=>{
+                this.cateid=item
+              })
+              .backgroundColor(Color.Transparent)
+              .height(75)
+              .width(75)
+            }
+          })
+        }
+      }
+      .listDirection(Axis.Horizontal).lanes({minLength:75,maxLength:226}).height(150)//.width('70%')
+      TextInput({ placeholder: '', text: this.remarksValue }).height(40).width('90%').margin({top:10,bottom:10})
+        .onChange((value: string) => {
+          this.remarksValue = value
+        })
+      TextInput({ placeholder: '', text: this.moneyValue.toString() }).height(40).width('90%').margin({top:10,bottom:10})
+        .onChange((value: string) => {
+          this.moneyValue = Number(value)
+        })
+      Flex({ justifyContent: FlexAlign.SpaceAround }) {
+        Button('放弃')
+          .onClick(() => {
+            this.controller.close()
+            this.cancel()
+          }).backgroundColor(0xffffff).fontColor(Color.Black)
+        Button('确认')
+          .onClick(() => {
+            this.controller.close()
+            this.confirm()
+          }).backgroundColor(0xffffff).fontColor(Color.Red)
+      }.margin({ bottom: 10 })
+    }
+  }
 }
