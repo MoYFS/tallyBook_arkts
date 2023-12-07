@@ -13,5 +13,5 @@ export class CommonConstats {
     ['breakfast_icon.png','食物',9]];
  // static readonly  imageList : Array<[string ,string]>
   static readonly incomeList:Array<number>=[0,1,7];
-  static readonly disbursementList:Array<number>=[2,3,4,5,8,9];
+  static readonly disbursementList:Array<number>=[2,3,4,5,6,8,9];
 }

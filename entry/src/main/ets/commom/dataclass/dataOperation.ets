@@ -9,13 +9,9 @@ export default class dataOperation{
   public  PieshowList:Array<PicChartElement>//Array<[number,string,number]>;//种类id,种类名称，金额
   public  remainingSum:number;
   public  grossexp:number;
-  private pieColor:Color[]=[Color.Blue,Color.Brown,Color.Gray,Color.Green,Color.Orange,Color.Pink,Color.Red,Color.Yellow]
-  public InBasicDataSource:BasicDataSource
-  public OutBasicDataSource:BasicDataSource
+  private pieColor:Color[]=[Color.Blue,Color.Brown,Color.Gray,Color.Green,Color.Orange,Color.Pink,Color.Red,Color.Yellow,0x009999,0x85004B]
 
   constructor() {
-    this.InBasicDataSource=new BasicDataSource()
-    this.OutBasicDataSource=new BasicDataSource()
     this.IncomeList=[];
     this.DisbList=[];
     this.PieshowList=[];

@@ -6,6 +6,8 @@ import dataOperation from '../commom/dataclass/dataOperation';
 import { CommonConstats,cateIdDefine}  from '../commom/constant/CommonConstand';
 import common from '@ohos.app.ability.common';
 import fs from '@ohos.file.fs';
+import PreferenceUtil from '../commom/database/PreferencesUtil'
+import hilog from '@ohos.hilog';
 
 @Entry
 @Component
@@ -25,15 +27,17 @@ struct MainPage {
   @State remarksValue:string=''
   @State moneyValue:number=100
   @State typeID:number=0
-  @State  cateid:number=0
+  @State cateid:number=0
+  @State ID:number=6
+
   dialogController: CustomDialogController = new CustomDialogController({
     builder: CustomDialogExample({
       remarksValue:$remarksValue,
       moneyValue:$moneyValue,
-      typeid:this.typeID,
+      typeid: $typeID,
       cateid: $cateid,
       cancel: this.onCancel,
-      confirm: this.onAccept
+      confirm: this.onAccept.bind(this)
 
     }),
     cancel: this.existApp,
@@ -45,8 +49,15 @@ struct MainPage {
   })
 
   aboutToAppear(){
+    this.typeID=6
+    // globalThis.getAccountPreferences().then((preferences)=>{
+    //   preferences.get('moneyID','error').then((value)=>{
+    //     this.ID=value
+    //   })
+    // })
     this.dataOperation.IncomeList.push(new inout(0,0,cateIdDefine.gongzi,'工资',100000))
     this.dataOperation.DisbList.push(new inout(3,1,cateIdDefine.dianying,'电影',100),new inout(4,1,cateIdDefine.fangzu,'房租',300),new inout(2,1,cateIdDefine.tushu,'图书',1000),new inout(5,1,cateIdDefine.tushu,'图书',100))
+    //插入从数据库中加载数据到this.dataOperation的函数
     this.dataOperation.strikingBalance()
     this.dataOperation.Statexp()
   }
@@ -62,14 +73,38 @@ struct MainPage {
   }
 
   onCancel() {
-    console.info('Callback when the first button is clicked')
+    this.cateid=0
+    this.remarksValue=''
+    this.moneyValue=100
+    this.typeID=0
   }
 
   onAccept() {
-    console.info('Callback when the second button is clicked')
+    if(this.typeID==0){
+      this.dataOperation.IncomeList.push(new inout(this.ID,this.typeID,this.cateid,CommonConstats.imageList[this.cateid][1],this.moneyValue,this.remarksValue))
+      //加入插入数据库的函数
+    }
+    else{
+      this.dataOperation.DisbList.push(new inout(this.ID,this.typeID,this.cateid,CommonConstats.imageList[this.cateid][1],this.moneyValue,this.remarksValue))
+      this.dataOperation.Statexp()
+      //加入插入数据库的函数
+    }
+    this.ID+=1
+    // globalThis.getAccountPreferences().then((preferences)=>{
+    //   preferences.put('moneyID',this.ID)
+    //   preferences.flush();
+    // })
+    this.cateid=0
+    this.remarksValue=''
+    this.moneyValue=100
+    this.typeID=0
+    this.dataOperation.strikingBalance()
   }
   existApp() {
-    console.info('Click the callback in the blank area')
+    this.cateid=0
+    this.remarksValue=''
+    this.moneyValue=100
+    this.typeID=0
   }
 
   change(){
@@ -539,7 +574,7 @@ struct CustomDialogExample {
   build() {
     Column() {
       Text('类别:'+CommonConstats.imageList[this.cateid][1]).fontSize(20).margin({ top: 10, bottom: 10}).fontColor(Color.Gray)
-      List(){
+      List({ space: 5, initialIndex: 0 }){
         if(this.typeid==0){
           ForEach(CommonConstats.incomeList,(item,index)=>{
             ListItem(){
@@ -581,12 +616,14 @@ struct CustomDialogExample {
           })
         }
       }
-      .listDirection(Axis.Horizontal).lanes({minLength:75,maxLength:226}).height(150)//.width('70%')
-      TextInput({ placeholder: '', text: this.remarksValue }).height(40).width('90%').margin({top:10,bottom:10})
+      .listDirection(Axis.Horizontal).lanes({minLength:75,maxLength:225}).height(150)//.width('70%')
+      TextInput({ placeholder: '', text: this.remarksValue }).height(40).width('90%').margin({top:30,bottom:10})
+        .overlay('备注',{offset:{x:10,y:-20}})
         .onChange((value: string) => {
           this.remarksValue = value
         })
-      TextInput({ placeholder: '', text: this.moneyValue.toString() }).height(40).width('90%').margin({top:10,bottom:10})
+      TextInput({ placeholder: '', text: this.moneyValue.toString() }).height(40).width('90%').margin({top:30,bottom:10})
+        .overlay('金额',{offset:{x:10,y:-20}})
         .onChange((value: string) => {
           this.moneyValue = Number(value)
         })
