@@ -77,7 +77,7 @@ export default struct GraphicList{
       Blank()
         .color('#3CA0D0')
         .width('100%')
-        .height('12%')
+        .height('24%')
         .offset({ "x": "0.0px", "y": "0.0px" })
         .shadow({ radius: 4, color: "00001E", offsetX: 0, offsetY: 0 })
       if (this.text != undefined){
@@ -87,56 +87,42 @@ export default struct GraphicList{
       Button({stateEffect:true})
         .backgroundColor(Color.Orange)
         .overlay('+',{align:Alignment.Center})
-        .height('12%')
-        .width('12%')
-        .offset({ "x": '88%', 'y': '-18%' })
+        .height('24%')
+        .aspectRatio(1)
+        .offset({ "x": '83%', 'y': '-32.5%' })
         .onClick((event:ClickEvent)=>{
           if (this.dialogController != undefined) {
             this.dialogController.open()
           }
         })
-      Row() {
+      List({ space: 5, initialIndex: 0 }){
         if (this.imageList != undefined) {
-          ForEach(this.imageList, (item: [string, string],index:number) => {
-            if(index<3 ) {
+          ForEach(this.imageList,(item: [string, string],index:number)=>{
+            ListItem(){
               Button({type:ButtonType.Normal,stateEffect:true}){
                 Image($rawfile('gui/' + item[0]))
                   .objectFit(ImageFit.None)
-                  .overlay(item[1], { align: Alignment.Bottom })
+                  .overlay(item[1], { align: Alignment.Bottom})
                   .backgroundImageSize(ImageSize.Auto)
                   .alignSelf(ItemAlign.Start)
                   .align(Alignment.Start)
               }
-              .width('33.3%')
-              .height('25%')
-              .backgroundColor(Color.Transparent)
-            }
-            else{
-              Button({type:ButtonType.Normal,stateEffect:true}){
-                Image($rawfile('gui/' + item[0]))
-                  .objectFit(ImageFit.None)
-                  .overlay(item[1], { align: Alignment.Bottom })
-                  .backgroundImageSize(ImageSize.Auto)
-                  .alignSelf(ItemAlign.Start)
-                  .align(Alignment.Start)
-              }
-              .width('33.3%')
-              .height('25%')
-              .offset({'x':'-99.9%','y':'25%'})
+              .height(75)
+              .width(75)
               .backgroundColor(Color.Transparent)
             }
           })
         }
       }
-      .offset({"x":'0.0px','y':'-18%'})
-      .height('88%')
+      .offset({'y':'-30%'})
+      .listDirection(Axis.Vertical)
+      .lanes({minLength:75,maxLength:225})
+      .height(150)
       .width('100%')
-      .align(Alignment.TopStart)
-      .alignItems(VerticalAlign.Top)
     }
     .align(Alignment.TopStart)
     .width('90%')
-    .height('100%')
+    .height('70%')
     .alignItems(HorizontalAlign.Start)
   }
 }

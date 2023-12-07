@@ -1,5 +1,6 @@
 import {CommonConstats,cateIdDefine} from '../commom/constant/CommonConstand'
 import GraphicList from '../view/GraphicList'
+import hilog from '@ohos.hilog';
 @Entry
 @Component
 struct SittingPage {
@@ -22,9 +23,15 @@ struct SittingPage {
       .height('12%')
 
       Column() {
-        GraphicList({text:'收入类别',imageList:CommonConstats.incomeList.map((value)=>{return CommonConstats.imageList[value]})})
+        GraphicList({text:'收入类别',imageList:CommonConstats.incomeList.map((value)=>{
+            return CommonConstats.imageList[value]
+          })
+        })
           .height('50%')
-        GraphicList({text:'支出类别',imageList:CommonConstats.disbursementList.map((value)=>{return CommonConstats.imageList[value]})})
+        GraphicList({text:'支出类别',imageList:CommonConstats.disbursementList.map((value)=>{
+            return CommonConstats.imageList[value]
+          })
+        })
           .height('50%')
       }
       .offset({ 'x': '0.0px', 'y': '1%' })

@@ -573,7 +573,10 @@ struct CustomDialogExample {
 
   build() {
     Column() {
-      Text('类别:'+CommonConstats.imageList[this.cateid][1]).fontSize(20).margin({ top: 10, bottom: 10}).fontColor(Color.Gray)
+      Text('类别:'+CommonConstats.imageList[this.cateid][1])
+        .fontSize(20)
+        .margin({ top: 10, bottom: 10})
+        .fontColor(Color.Gray)
       List({ space: 5, initialIndex: 0 }){
         if(this.typeid==0){
           ForEach(CommonConstats.incomeList,(item,index)=>{
@@ -616,13 +619,21 @@ struct CustomDialogExample {
           })
         }
       }
-      .listDirection(Axis.Horizontal).lanes({minLength:75,maxLength:225}).height(150)//.width('70%')
-      TextInput({ placeholder: '', text: this.remarksValue }).height(40).width('90%').margin({top:30,bottom:10})
+      .listDirection(Axis.Vertical)
+      .lanes({minLength:75,maxLength:225})
+      .height(150)//.width('70%')
+      TextInput({ placeholder: '', text: this.remarksValue })
+        .height(40)
+        .width('90%')
+        .margin({top:30,bottom:10})
         .overlay('备注',{offset:{x:10,y:-20}})
         .onChange((value: string) => {
           this.remarksValue = value
         })
-      TextInput({ placeholder: '', text: this.moneyValue.toString() }).height(40).width('90%').margin({top:30,bottom:10})
+      TextInput({ placeholder: '', text: this.moneyValue.toString() })
+        .height(40)
+        .width('90%')
+        .margin({top:30,bottom:10})
         .overlay('金额',{offset:{x:10,y:-20}})
         .onChange((value: string) => {
           this.moneyValue = Number(value)
@@ -632,12 +643,16 @@ struct CustomDialogExample {
           .onClick(() => {
             this.controller.close()
             this.cancel()
-          }).backgroundColor(0xffffff).fontColor(Color.Black)
+          })
+          .backgroundColor(0xffffff)
+          .fontColor(Color.Black)
         Button('确认')
           .onClick(() => {
             this.controller.close()
             this.confirm()
-          }).backgroundColor(0xffffff).fontColor(Color.Red)
+          })
+          .backgroundColor(0xffffff)
+          .fontColor(Color.Red)
       }.margin({ bottom: 10 })
     }
   }
