@@ -14,13 +14,6 @@ creaftPreferences(context){
 
   saveDefaultAccount(account:string,password:string){
     globalThis.getAccountPreferences().then((preferences)=>{
-      // preferences.has(account).then(async(isExist)=>{
-      //   if (!isExist) {
-      //     // 保存数据
-      //     await preferences.put(account, password);
-      //     preferences.flush();
-      //   }
-      // })
       preferences.getAll().then((value)=>{
         if(Object.keys(value).length==0){
           preferences.put(myaccount, account);

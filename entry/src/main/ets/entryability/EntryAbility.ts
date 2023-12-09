@@ -3,6 +3,7 @@ import hilog from '@ohos.hilog';
 import window from '@ohos.window';
 import Want from '@ohos.app.ability.Want';
 import AbilityConstant from '@ohos.app.ability.AbilityConstant';
+import RdbStoreUtil from '../commom/database/dataStorage'
 import PreferenceUtil from '../commom/database/PreferencesUtil'
 
 
@@ -13,7 +14,9 @@ export default class EntryAbility extends UIAbility {
     globalThis.transitionTime=<number>200;
     PreferenceUtil.creaftPreferences(this.context)
     PreferenceUtil.saveDefaultAccount('Dear','11111111');
-    //PreferenceUtil.saveDefaultAccount(account,password);
+    // const SQL_CREATE_TABLE = 'CREATE TABLE IF NOT EXISTS INOUTLIST (ID INTEGER PRIMARY KEY , TYPEID INTEGER,CATEID INTEGER,CATE TEXT,MONEY REAL,REMARKS TEXT,TIME TEXT)';
+    // RdbStoreUtil.creaftRdbStoreUtil(this.context);
+    // RdbStoreUtil.saveDefaultRdbStoreUtil(SQL_CREATE_TABLE);
   }
   onDestroy() {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onDestroy');

@@ -6,7 +6,7 @@ import dataOperation from '../commom/dataclass/dataOperation';
 import { CommonConstats,cateIdDefine}  from '../commom/constant/CommonConstand';
 import common from '@ohos.app.ability.common';
 import fs from '@ohos.file.fs';
-import PreferenceUtil from '../commom/database/PreferencesUtil'
+import relationalStore from '@ohos.data.relationalStore'
 import hilog from '@ohos.hilog';
 
 @Entry
@@ -17,8 +17,8 @@ struct MainPage {
   @State showSide:boolean=true;
   @State showButton:boolean=false;
   @State scale1:number=1;
-  @State account:string='Dear';
-  //@State account:string=router.getParams()['account'];
+  //@State account:string='Dear';
+  @State account:string=router.getParams()['account'];
   private controller: TabsController = new TabsController()
   @State @Watch('change') dataOperation:dataOperation=new dataOperation()
   @StorageLink('PieElement') PieElement:PicChartElement[]=[]
@@ -29,6 +29,7 @@ struct MainPage {
   @State typeID:number=0
   @State cateid:number=0
   @State ID:number=6
+  RdbStore:relationalStore.RdbStore;
 
   dialogController: CustomDialogController = new CustomDialogController({
     builder: CustomDialogExample({
@@ -49,15 +50,68 @@ struct MainPage {
   })
 
   aboutToAppear(){
-    this.typeID=6
-    // globalThis.getAccountPreferences().then((preferences)=>{
-    //   preferences.get('moneyID','error').then((value)=>{
-    //     this.ID=value
-    //   })
-    // })
-    this.dataOperation.IncomeList.push(new inout(0,0,cateIdDefine.gongzi,'工资',100000))
-    this.dataOperation.DisbList.push(new inout(3,1,cateIdDefine.dianying,'电影',100),new inout(4,1,cateIdDefine.fangzu,'房租',300),new inout(2,1,cateIdDefine.tushu,'图书',1000),new inout(5,1,cateIdDefine.tushu,'图书',100))
+    globalThis.getAccountPreferences().then((preferences)=>{
+      preferences.get('moneyID','error').then((value)=>{
+        this.ID=value
+      })
+    })
+    // this.dataOperation.IncomeList.push(new inout(0,0,cateIdDefine.gongzi,'工资',100000))
+    // this.dataOperation.DisbList.push(new inout(3,1,cateIdDefine.dianying,'电影',100),new inout(4,1,cateIdDefine.fangzu,'房租',300),new inout(2,1,cateIdDefine.tushu,'图书',1000),new inout(5,1,cateIdDefine.tushu,'图书',100))
     //插入从数据库中加载数据到this.dataOperation的函数
+
+    const Store_Config={
+      name: "moneyData.db",
+      securityLevel: relationalStore.SecurityLevel.S2
+    };
+    let context = getContext(this) as common.UIAbilityContext;
+    relationalStore.getRdbStore(context,Store_Config,(err,rdbstore)=>{
+      const SQL_CREATE_TABLE = 'CREATE TABLE IF NOT EXISTS INOUTLIST (ID INTEGER PRIMARY KEY , TYPEID INTEGER,CATEID INTEGER,CATE TEXT,MONEY REAL,REMARKS TEXT,TIME TEXT)';
+      rdbstore.executeSql(SQL_CREATE_TABLE);
+      this.RdbStore=rdbstore;
+    })
+
+    let predicates=new relationalStore.RdbPredicates('INOUTLIST');
+      predicates.equalTo('TYPEID',0)
+      this.RdbStore.query(predicates,["ID","TYPEID","CATEID","CATE","MONEY","REMARKS","TIME"],(err, resultSet)=>{
+        if(resultSet.rowCount==0){
+          hilog.info(0x0000,'testTag','12312321'+resultSet.rowCount)
+        }
+        else{
+          //while (resultSet.next){
+          do {
+            let id = resultSet.getLong(resultSet.getColumnIndex("ID"));
+            let cateid = resultSet.getLong(resultSet.getColumnIndex("CATEID"));
+            let cate = resultSet.getString(resultSet.getColumnIndex("CATE"));
+            let money = resultSet.getDouble(resultSet.getColumnIndex("MONEY"));
+            let remarks = resultSet.getString(resultSet.getColumnIndex("REMARKS"));
+            let time = resultSet.getString(resultSet.getColumnIndex("TIME"))
+            this.dataOperation.IncomeList.push(new inout(id, 0, cateid, cate, money, remarks, time));
+            const isColumnNull = resultSet.isColumnNull(resultSet.getColumnIndex("ID"));
+            //hilog.info(0x0000,'testTag',isColumnNull.valueOf())
+            //}
+          }while (resultSet.goToNextRow())
+        }
+        resultSet.close();
+      })
+      predicates.equalTo('TYPEID',1)
+      this.RdbStore.query(predicates,["ID","TYPEID","CATEID","CATE","MONEY","REMARKS","TIME"],(err, resultSet)=>{
+        if(resultSet.rowCount==0){
+          hilog.info(0x0000,'testTag',resultSet.rowCount.toString())
+        }
+        else{
+          do{
+            let id=resultSet.getLong(resultSet.getColumnIndex("ID"));
+            let cateid=resultSet.getLong(resultSet.getColumnIndex("CATEID"));
+            let cate=resultSet.getString(resultSet.getColumnIndex("CATE"));
+            let money=resultSet.getDouble(resultSet.getColumnIndex("MONEY"));
+            let remarks=resultSet.getString(resultSet.getColumnIndex("REMARKS"));
+            let time=resultSet.getString(resultSet.getColumnIndex("TIME"))
+            this.dataOperation.DisbList.push(new inout(id,0,cateid,cate,money,remarks,time));
+            hilog.info(0x0000,'testTag',id+cateid+cate)
+          }while (resultSet.goToNextRow())
+        }
+        resultSet.close();
+      })
     this.dataOperation.strikingBalance()
     this.dataOperation.Statexp()
   }
@@ -80,20 +134,33 @@ struct MainPage {
   }
 
   onAccept() {
+    let time:string;
     if(this.typeID==0){
       this.dataOperation.IncomeList.push(new inout(this.ID,this.typeID,this.cateid,CommonConstats.imageList[this.cateid][1],this.moneyValue,this.remarksValue))
-      //加入插入数据库的函数
+      time=this.dataOperation.IncomeList[this.dataOperation.IncomeList.length-1].time;
     }
     else{
       this.dataOperation.DisbList.push(new inout(this.ID,this.typeID,this.cateid,CommonConstats.imageList[this.cateid][1],this.moneyValue,this.remarksValue))
       this.dataOperation.Statexp()
-      //加入插入数据库的函数
+      time=this.dataOperation.DisbList[this.dataOperation.DisbList.length-1].time;
     }
+    let  valueBucket={
+      "ID":this.ID,
+      "TYPEID":this.typeID,
+      "CATEID":this.cateid,
+      "CATE":CommonConstats.imageList[this.cateid][1],
+      "MONEY":this.moneyValue,
+      "REMARKS":this.remarksValue,
+      "TIME":time
+    }
+    
+      this.RdbStore.insert('INOUTLIST',valueBucket)
+
     this.ID+=1
-    // globalThis.getAccountPreferences().then((preferences)=>{
-    //   preferences.put('moneyID',this.ID)
-    //   preferences.flush();
-    // })
+    globalThis.getAccountPreferences().then((preferences)=>{
+      preferences.put('moneyID',this.ID)
+      preferences.flush();
+    })
     this.cateid=0
     this.remarksValue=''
     this.moneyValue=100
@@ -120,12 +187,13 @@ struct MainPage {
         .onClick((event:ClickEvent)=>{
           if(item.typeid===1){
             this.dataOperation.deleteDisb(item.id)
-            //插入数据库删除操作
           }
           else {
             this.dataOperation.deleteIncome(item.id)
-            //插入数据库删除操作
           }
+            let predicates = new relationalStore.RdbPredicates('INOUTLIST');
+            predicates.equalTo('ID', item.id);
+            this.RdbStore.delete(predicates)
         })
     }
     .margin({left:"16vp"})
