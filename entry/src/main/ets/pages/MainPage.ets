@@ -3,12 +3,10 @@ import  inout from '../commom/dataclass/inout';
 import { PieChart} from '../view/PieChart';
 import {PicChartElement} from  '../commom/dataclass/PicChartElement';
 import dataOperation from '../commom/dataclass/dataOperation';
-import { CommonConstats,cateIdDefine}  from '../commom/constant/CommonConstand';
+import { CommonConstats}  from '../commom/constant/CommonConstand';
 import common from '@ohos.app.ability.common';
 import fs from '@ohos.file.fs';
-import relationalStore from '@ohos.data.relationalStore'
 import AccountTable from '../commom/database/AccountTable';
-import hilog from '@ohos.hilog';
 
 @Entry
 @Component

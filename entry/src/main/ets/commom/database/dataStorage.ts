@@ -1,6 +1,5 @@
 import relationalStore from '@ohos.data.relationalStore'
 import common from '@ohos.app.ability.common';
-import hilog from '@ohos.hilog';
 
 export class RdbStoreUtil{
   private rdbStore: relationalStore.RdbStore | null = null;
