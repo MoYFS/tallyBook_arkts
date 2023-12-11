@@ -7,6 +7,7 @@ import { CommonConstats}  from '../commom/constant/CommonConstand';
 import common from '@ohos.app.ability.common';
 import fs from '@ohos.file.fs';
 import AccountTable from '../commom/database/AccountTable';
+import fileuri from '@ohos.file.fileuri';
 
 @Entry
 @Component
@@ -59,7 +60,7 @@ struct MainPage {
     //插入从数据库中加载数据到this.dataOperation的函数
     this.AccountTable.getRdbStore(this.context,async () => {
       this.AccountTable.query(0,(result: inout[]) => {
-       this.dataOperation.IncomeList=result
+        this.dataOperation.IncomeList=result
         this.dataOperation.strikingBalance()
         this.dataOperation.Statexp()
       }, false);
@@ -152,6 +153,7 @@ struct MainPage {
     str.writeSync('支出：'+this.dataOperation.grossexp)
     str.closeSync()
     let want  = {
+      //bundleName:"com.huawei.android.instantshare",
       uri:'',//fileuri.getUriFromPath(context.filesDir+'/inout.txt'),
       type: "text/plain",
       action: 'ohos.want.action.sendData',
