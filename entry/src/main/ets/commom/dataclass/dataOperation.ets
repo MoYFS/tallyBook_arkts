@@ -1,7 +1,5 @@
 import inout from './inout';
 import {PicChartElement} from '../dataclass/PicChartElement'
-import  {BasicDataSource} from '../dataclass/LazyForEachData'
-import hilog from '@ohos.hilog';
 
 export default class dataOperation{
   public  IncomeList:Array<inout>;

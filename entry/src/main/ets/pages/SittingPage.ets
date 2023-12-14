@@ -1,6 +1,6 @@
-import {CommonConstats,cateIdDefine} from '../commom/constant/CommonConstand'
+import {CommonConstats} from '../commom/constant/CommonConstand'
 import GraphicList from '../view/GraphicList'
-import hilog from '@ohos.hilog';
+
 @Entry
 @Component
 struct SittingPage {

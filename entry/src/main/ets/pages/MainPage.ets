@@ -7,7 +7,6 @@ import { CommonConstats}  from '../commom/constant/CommonConstand';
 import common from '@ohos.app.ability.common';
 import fs from '@ohos.file.fs';
 import AccountTable from '../commom/database/AccountTable';
-import fileuri from '@ohos.file.fileuri';
 
 @Entry
 @Component
@@ -90,16 +89,13 @@ struct MainPage {
   }
 
   onAccept() {
-    //let time:string;
     if(this.typeID==0){
       this.dataOperation.IncomeList.push(new inout(this.ID,this.typeID,this.cateid,CommonConstats.imageList[this.cateid][1],this.moneyValue,this.remarksValue))
-      //time=this.dataOperation.IncomeList[this.dataOperation.IncomeList.length-1].time;
       this.AccountTable.insertData(this.dataOperation.IncomeList[this.dataOperation.IncomeList.length-1],()=>{})
     }
     else{
       this.dataOperation.DisbList.push(new inout(this.ID,this.typeID,this.cateid,CommonConstats.imageList[this.cateid][1],this.moneyValue,this.remarksValue))
       this.dataOperation.Statexp()
-        //time=this.dataOperation.DisbList[this.dataOperation.DisbList.length-1].time;
       this.AccountTable.insertData(this.dataOperation.DisbList[this.dataOperation.DisbList.length-1],()=>{})
     }
       //数据插入
@@ -153,13 +149,11 @@ struct MainPage {
     str.writeSync('支出：'+this.dataOperation.grossexp)
     str.closeSync()
     let want  = {
-      //bundleName:"com.huawei.android.instantshare",
       uri:'',//fileuri.getUriFromPath(context.filesDir+'/inout.txt'),
       type: "text/plain",
       action: 'ohos.want.action.sendData',
     }
     context.startAbility(want)
-    //hilog.info(0x0000,'testTag',fs.readTextSync(context.filesDir+'/account.txt'))
   }
 
   build() {
@@ -469,7 +463,6 @@ struct MainPage {
                         }
                         .height('100%')
                         .offset({'x':'-15%'})
-                        //.margin({ le })
                         Text(item.money.toString())
                           .fontSize(30)
                           .fontColor(Color.Red)
@@ -494,7 +487,7 @@ struct MainPage {
                     .borderRadius(5)
                   }
                   .swipeAction({end:this.itemEnd(item)})
-                })
+                },(item: inout) => JSON.stringify(item))
               }
               .width('100%')
               .height('89%')

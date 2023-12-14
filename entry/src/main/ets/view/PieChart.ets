@@ -1,4 +1,3 @@
-import hilog from '@ohos.hilog';
 import {PicChartElement} from '../commom/dataclass/PicChartElement'
 //@Entry
 @Component

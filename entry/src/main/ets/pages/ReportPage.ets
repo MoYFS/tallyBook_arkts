@@ -1,6 +1,5 @@
 import router from '@ohos.router';
-import  inout from '../commom/dataclass/inout';
-import {cateIdDefine}  from '../commom/constant/CommonConstand';
+
 import dataOperation from '../commom/dataclass/dataOperation';
 
 @Entry
@@ -16,8 +15,6 @@ struct ReportPage {
   aboutToAppear(){
     let temp=new Date
     this.endDate=temp.getFullYear().toString()+'-'+(temp.getMonth()+1).toString()+'-'+temp.getDate().toString()
-    // this.dataOperation.IncomeList.push(new inout(0,0,cateIdDefine.gongzi,'工资',100000))
-    // this.dataOperation.DisbList.push(new inout(3,1,cateIdDefine.dianying,'电影',100),new inout(4,1,cateIdDefine.fangzu,'房租',300),new inout(2,1,cateIdDefine.tushu,'图书',1000),new inout(5,1,cateIdDefine.tushu,'图书',100))
   }
 
   onPageShow(){
