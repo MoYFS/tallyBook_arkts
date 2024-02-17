@@ -1,5 +1,6 @@
 import {PicChartElement} from '../commom/dataclass/PicChartElement'
 //@Entry
+@Preview
 @Component
 export struct PieChart {
   // 饼图数据
